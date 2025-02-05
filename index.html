@@ -5,25 +5,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ยืมอุปกรณ์</title>
     <style>
-        .container { width: 80%; margin-left: 50px; display: flex; flex-direction: column; }
-        .menu { background: #333; padding: 10px; text-align: center; width: 100%; }
-        .menu button { background: #fff; border: none; padding: 10px 20px; margin: 5px; cursor: pointer; }
-        #shop { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-        .item { text-align: center; }
-        .item img {
-            width: 200px;   /* ความกว้างของรูป */
-            height: 200px;  /* ความสูงของรูป */
-            object-fit: cover; /* ทำให้รูปคงอัตราส่วนและครอบคลุมพื้นที่ */
+        /* ให้หน้าเว็บเหมาะสมกับทุกขนาดหน้าจอ */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
         }
-        .cart-container { position: fixed; right: 20px; top: 100px; width: 200px; border: 1px solid black; padding: 10px; background: #f9f9f9; }
-        .checkout-container {
-            margin-top: 20px; /* เพิ่มระยะห่างจากตะกร้า */
-            padding: 20px;
+
+        .container {
+            width: 80%;
+            margin-left: 50px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu {
+            background: #333;
+            padding: 10px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .menu button {
+            background: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        /* ใช้ Grid สำหรับการแสดงรายการอุปกรณ์ */
+        #shop {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .item {
+            text-align: center;
+        }
+
+        .cart-container {
+            position: fixed;
+            right: 20px;
+            top: 100px;
+            width: 200px;
+            border: 1px solid black;
+            padding: 10px;
             background: #f9f9f9;
-            border: 1px solid #ddd;
         }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        table, th, td { border: 1px solid black; padding: 10px; text-align: center; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* ทำให้รูปภาพมีขนาดเป็นสี่เหลี่ยมจัตุรัส */
+        .item img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        /* ปรับรูปแบบเมื่อหน้าจอขนาดเล็ก */
+        @media (max-width: 768px) {
+            #shop {
+                grid-template-columns: repeat(2, 1fr); /* แสดง 2 คอลัมน์ */
+            }
+
+            .cart-container {
+                width: 150px; /* ปรับขนาดตะกร้า */
+            }
+        }
+
+        @media (max-width: 480px) {
+            #shop {
+                grid-template-columns: 1fr; /* แสดง 1 คอลัมน์ */
+            }
+
+            .cart-container {
+                width: 100px; /* ปรับขนาดตะกร้าให้เล็กลงในมือถือ */
+            }
+        }
     </style>
 </head>
 <body>
@@ -35,58 +104,57 @@
         <h1>เลือกอุปกรณ์ที่ต้องการยืม</h1>
         <div id="shop">
             <div class="item">
-                <img src="png/462537251_1148853660185820_4083607689974932983_n.jpg"><br>
-                จาเลงเจ๋งแจ๋ว <br>
+                <img src="png/462537251_1148853660185820_4083607689974932983_n.jpg" alt="Laptop"><br>
+                Laptop <br>
                 <input type="number" id="laptopQty" min="1" value="1">
-                <button onclick="addToCart('จาเลงเจ๋งแจ๋ว', document.getElementById('laptopQty').value)">เพิ่มลงตะกร้า</button>
+                <button onclick="addToCart('Laptop', document.getElementById('laptopQty').value)">เพิ่มลงตะกร้า</button>
             </div>
             <div class="item">
-                <img src="png/462561848_1269802834272576_2180353974536705714_n.jpg"><br>
-                พี่ตูน <br>
+                <img src="png/462561848_1269802834272576_2180353974536705714_n.jpg" alt="Camera"><br>
+                กล้อง <br>
                 <input type="number" id="cameraQty" min="1" value="1">
-                <button onclick="addToCart('พี่ตูน', document.getElementById('cameraQty').value)">เพิ่มลงตะกร้า</button>
+                <button onclick="addToCart('Camera', document.getElementById('cameraQty').value)">เพิ่มลงตะกร้า</button>
             </div>
             <div class="item">
-                <img src="png/462562950_539205492246037_1921688717345430622_n.jpg"><br>
-                ฮิปโป <br>
+                <img src="png/462562950_539205492246037_1921688717345430622_n.jpg" alt="Headphone"><br>
+                หูฟัง <br>
                 <input type="number" id="headphoneQty" min="1" value="1">
-                <button onclick="addToCart('ฮิปโป', document.getElementById('headphoneQty').value)">เพิ่มลงตะกร้า</button>
+                <button onclick="addToCart('Headphone', document.getElementById('headphoneQty').value)">เพิ่มลงตะกร้า</button>
             </div>
             <div class="item">
-                <img src="png/467489760_563789979919691_7042015674998196239_n.jpg"><br>
-                ตูนลิงบาบูด <br>
+                <img src="png/467489760_563789979919691_7042015674998196239_n.jpg" alt="Projector"><br>
+                โปรเจคเตอร์ <br>
                 <input type="number" id="projectorQty" min="1" value="1">
-                <button onclick="addToCart('ตูนลิงบาบูด', document.getElementById('projectorQty').value)">เพิ่มลงตะกร้า</button>
+                <button onclick="addToCart('Projector', document.getElementById('projectorQty').value)">เพิ่มลงตะกร้า</button>
             </div>
             <div class="item">
-                <img src="png/471622323_923107446593541_4783946066010486161_n.jpg"><br>
-                ชายตัวเล็ก <br>
+                <img src="png/471622323_923107446593541_4783946066010486161_n.jpg" alt="Microphone"><br>
+                ไมโครโฟน <br>
                 <input type="number" id="microphoneQty" min="1" value="1">
-                <button onclick="addToCart('ชายตัวเล็ก', document.getElementById('microphoneQty').value)">เพิ่มลงตะกร้า</button>
+                <button onclick="addToCart('Microphone', document.getElementById('microphoneQty').value)">เพิ่มลงตะกร้า</button>
             </div>
             <div class="item">
-                <img src="png/473061501_588944184074349_3180139917156377230_n.jpg"><br>
-                บักควยแว่น <br>
+                <img src="png/473061501_588944184074349_3180139917156377230_n.jpg" alt="Tablet"><br>
+                แท็บเล็ต <br>
                 <input type="number" id="tabletQty" min="1" value="1">
-                <button onclick="addToCart('บักควยแว่น', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+                <button onclick="addToCart('Tablet', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
             </div>
         </div>
     </div>
 
     <div class="cart-container">
-        <h2>ตะกร้าสินค้า</h2>
+        <h2>🛒 ตะกร้าสินค้า</h2>
         <div id="cart"></div>
         <button onclick="showCheckout()">ยืนยันการยืม</button>
-            <!-- ข้อมูลผู้ยืม -->
-            <div class="checkout-container" id="checkout" style="display:none;">
-                <h2>ข้อมูลผู้ยืม</h2>
-                ชื่อ: <input type="text" id="name"><br>
-                รหัสนักศึกษา: <input type="text" id="studentId"><br>
-                เหตุผลในการยืม: <input type="text" id="reason"><br>
-            <button onclick="confirmBorrow()">บันทึกข้อมูล</button>
-        </div>
     </div>
 
+    <div id="checkout" style="display:none;">
+        <h2>ข้อมูลผู้ยืม</h2>
+        ชื่อ: <input type="text" id="name"><br>
+        รหัสนักศึกษา: <input type="text" id="studentId"><br>
+        เหตุผลในการยืม: <input type="text" id="reason"><br>
+        <button onclick="confirmBorrow()">บันทึกข้อมูล</button>
+    </div>
 
     <script>
         let cart = [];
@@ -108,7 +176,7 @@
             let borrowedList = JSON.parse(localStorage.getItem('borrowedEquipments')) || [];
             borrowedList.push({ name, studentId, reason, cart });
             localStorage.setItem('borrowedEquipments', JSON.stringify(borrowedList));
-            alert('บันทึกขอมูลการยืมสำเร็จสำเร็จ!');
+            alert('บันทึกสำเร็จ!');
             cart = [];
             updateCartDisplay();
             document.getElementById('checkout').style.display = 'none';
