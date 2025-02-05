@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เช็คสถานะการยืม</title>
+    <style>
+        .container { width: 100%; margin-left: center; display: flex; flex-direction: column; }
+        .menu { background: #333; padding: 10px; text-align: center; width: 100%; }
+        .menu button { background: #fff; border: none; padding: 10px 20px; margin: 5px; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        table, th, td { border: 1px solid black; padding: 10px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <button onclick="window.location.href='index.html'">กลับหน้าหลัก</button>
+    </div>
+
+    <div class="container">
+        <h2>รายการที่ถูกยืม</h2>
+        <button onclick="showBorrowedList()">เช็คสถานะ</button>
+        <table id="borrowedList">
+            <tr>
+                <th>ชื่อ</th>
+                <th>รหัสนักศึกษา</th>
+                <th>เหตุผล</th>
+                <th>อุปกรณ์</th>
+                <th>สถานะ</th>
+                <th>การคืน</th>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function showBorrowedList() {
+            let borrowedList = JSON.parse(localStorage.getItem('borrowedEquipments')) || [];
+            let table = document.getElementById('borrowedList');
+            
+            // Clear existing table rows except header
+            table.innerHTML = '<tr><th>ชื่อ</th><th>รหัสนักศึกษา</th><th>เหตุผล</th><th>อุปกรณ์</th><th>สถานะ</th><th>การคืน</th></tr>';
+            
+            borrowedList.forEach((entry, index) => {
+                let row = table.insertRow();
+                row.innerHTML = `
+                    <td>${entry.name}</td>
+                    <td>${entry.studentId}</td>
+                    <td>${entry.reason}</td>
+                    <td>${entry.cart.map(c => `${c.item} x ${c.quantity}`).join(', ')}</td>
+                    <td>กำลังยืม</td>
+                    <td><button onclick="returnItem(${index})">คืน</button></td>
+                `;
+            });
+        }
+
+        function returnItem(index) {
+            let borrowedList = JSON.parse(localStorage.getItem('borrowedEquipments')) || [];
+            
+            // Remove the item from the borrowed list
+            borrowedList.splice(index, 1);
+            
+            // Update the localStorage
+            localStorage.setItem('borrowedEquipments', JSON.stringify(borrowedList));
+            
+            // Show an alert to confirm
+            alert('คืนอุปกรณ์เรียบร้อย!');
+            
+            // Refresh the table after removal
+            showBorrowedList();
+        }
+    </script>
+</body>
+</html>

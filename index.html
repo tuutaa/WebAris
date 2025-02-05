@@ -3,92 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARIS Borrow</title>
+    <title>ยืมอุปกรณ์</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
+        .container { width: 80%; margin-left: 50px; display: flex; flex-direction: column; }
+        .menu { background: #333; padding: 10px; text-align: center; width: 100%; }
+        .menu button { background: #fff; border: none; padding: 10px 20px; margin: 5px; cursor: pointer; }
+        #shop { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .item { text-align: center; }
+        .item img {
+            width: 200px;   /* ความกว้างของรูป */
+            height: 200px;  /* ความสูงของรูป */
+            object-fit: cover; /* ทำให้รูปคงอัตราส่วนและครอบคลุมพื้นที่ */
         }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            margin: 10px;
-            cursor: pointer;
+        .cart-container { position: fixed; right: 20px; top: 100px; width: 200px; border: 1px solid black; padding: 10px; background: #f9f9f9; }
+        .checkout-container {
+            margin-top: 20px; /* เพิ่มระยะห่างจากตะกร้า */
+            padding: 20px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
         }
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            display: none; /* ซ่อนตารางตอนเริ่มต้น */
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 10px;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        #loadingMessage {
-            display: none;
-            font-size: 18px;
-            color: rgb(0, 0, 0);
-            margin-top: 20px;
-        }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        table, th, td { border: 1px solid black; padding: 10px; text-align: center; }
     </style>
 </head>
 <body>
+    <div class="menu">
+        <button onclick="window.location.href='status.html'">เช็คสถานะ</button>
+    </div>
 
-    <button onclick="window.location.href='https://forms.gle/Hnar458b4XijUzt19';">
-        ลงทะเบียนการยืมอุปกรณ์
-    </button>
+    <div class="container">
+        <h1>เลือกอุปกรณ์ที่ต้องการยืม</h1>
+        <div id="shop">
+            <div class="item">
+                <img src="png/462537251_1148853660185820_4083607689974932983_n.jpg"><br>
+                จาเลงเจ๋งแจ๋ว <br>
+                <input type="number" id="laptopQty" min="1" value="1">
+                <button onclick="addToCart('จาเลงเจ๋งแจ๋ว', document.getElementById('laptopQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/462561848_1269802834272576_2180353974536705714_n.jpg"><br>
+                พี่ตูน <br>
+                <input type="number" id="cameraQty" min="1" value="1">
+                <button onclick="addToCart('พี่ตูน', document.getElementById('cameraQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/462562950_539205492246037_1921688717345430622_n.jpg"><br>
+                ฮิปโป <br>
+                <input type="number" id="headphoneQty" min="1" value="1">
+                <button onclick="addToCart('ฮิปโป', document.getElementById('headphoneQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/467489760_563789979919691_7042015674998196239_n.jpg"><br>
+                ตูนลิงบาบูด <br>
+                <input type="number" id="projectorQty" min="1" value="1">
+                <button onclick="addToCart('ตูนลิงบาบูด', document.getElementById('projectorQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/471622323_923107446593541_4783946066010486161_n.jpg"><br>
+                ชายตัวเล็ก <br>
+                <input type="number" id="microphoneQty" min="1" value="1">
+                <button onclick="addToCart('ชายตัวเล็ก', document.getElementById('microphoneQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/473061501_588944184074349_3180139917156377230_n.jpg"><br>
+                บักควยแว่น <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('บักควยแว่น', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+        </div>
+    </div>
 
-    <button onclick="fetchData()">
-        รายชื่อผู้ยืม
-    </button>
+    <div class="cart-container">
+        <h2>ตะกร้าสินค้า</h2>
+        <div id="cart"></div>
+        <button onclick="showCheckout()">ยืนยันการยืม</button>
+            <!-- ข้อมูลผู้ยืม -->
+            <div class="checkout-container" id="checkout" style="display:none;">
+                <h2>ข้อมูลผู้ยืม</h2>
+                ชื่อ: <input type="text" id="name"><br>
+                รหัสนักศึกษา: <input type="text" id="studentId"><br>
+                เหตุผลในการยืม: <input type="text" id="reason"><br>
+            <button onclick="confirmBorrow()">บันทึกข้อมูล</button>
+        </div>
+    </div>
 
-    <p id="loadingMessage">โปรดรอ...</p> <!-- ข้อความรอโหลดข้อมูล -->
-
-    <table id="dataTable">
-        <thead>
-            <tr>
-                <th>เวลาที่ยืม</th>
-                <th>ชื่อ</th>
-                <th>อุปกรณ์ที่ยืม</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
 
     <script>
-        function fetchData() {
-            let loadingMessage = document.getElementById("loadingMessage");
-            let table = document.getElementById("dataTable");
-            let tableBody = table.querySelector("tbody");
-
-            loadingMessage.style.display = "block"; // แสดงข้อความโปรดรอ
-            table.style.display = "none"; // ซ่อนตารางก่อนโหลดข้อมูล
-
-            fetch("https://script.google.com/macros/s/AKfycbxhE6XCKGNfjS8LVAciW4bL5CEg3yZYmTATw7xj7QAuE2IaYsQp6s8zjvZRr7MhDq4A/exec") 
-                .then(response => response.json())
-                .then(data => {
-                    tableBody.innerHTML = ""; // เคลียร์ข้อมูลเก่าก่อนแสดงข้อมูลใหม่
-                    data.forEach(row => {
-                        let tr = document.createElement("tr");
-                        tr.innerHTML = `<td>${row.id}</td><td>${row.name}</td><td>${row.info}</td>`;
-                        tableBody.appendChild(tr);
-                    });
-
-                    loadingMessage.style.display = "none"; // ซ่อนข้อความโปรดรอ
-                    table.style.display = "table"; // แสดงตาราง
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                    loadingMessage.innerText = "เกิดข้อผิดพลาดในการโหลดข้อมูล!";
-                    loadingMessage.style.color = "red"; // เปลี่ยนข้อความเป็นสีแดงเมื่อเกิดข้อผิดพลาด
-                });
+        let cart = [];
+        function addToCart(item, quantity) {
+            cart.push({ item, quantity });
+            updateCartDisplay();
+        }
+        function updateCartDisplay() {
+            let cartDiv = document.getElementById('cart');
+            cartDiv.innerHTML = cart.map(c => `${c.item} x ${c.quantity}`).join('<br>');
+        }
+        function showCheckout() {
+            document.getElementById('checkout').style.display = 'block';
+        }
+        function confirmBorrow() {
+            let name = document.getElementById('name').value;
+            let studentId = document.getElementById('studentId').value;
+            let reason = document.getElementById('reason').value;
+            let borrowedList = JSON.parse(localStorage.getItem('borrowedEquipments')) || [];
+            borrowedList.push({ name, studentId, reason, cart });
+            localStorage.setItem('borrowedEquipments', JSON.stringify(borrowedList));
+            alert('บันทึกขอมูลการยืมสำเร็จสำเร็จ!');
+            cart = [];
+            updateCartDisplay();
+            document.getElementById('checkout').style.display = 'none';
         }
     </script>
-
 </body>
 </html>
