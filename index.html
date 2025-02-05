@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ดึงข้อมูลจาก Google Sheets</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            display: none; /* ซ่อนตารางตอนเริ่มต้น */
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        #loadingMessage {
+            display: none;
+            font-size: 18px;
+            color: rgb(0, 0, 0);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <button onclick="window.location.href='https://forms.gle/Hnar458b4XijUzt19';">
+        ลงทะเบียนการยืมอุปกรณ์
+    </button>
+
+    <button onclick="fetchData()">
+        รายชื่อผู้ยืม
+    </button>
+
+    <p id="loadingMessage">โปรดรอ...</p> <!-- ข้อความรอโหลดข้อมูล -->
+
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>เวลาที่ยืม</th>
+                <th>ชื่อ</th>
+                <th>อุปกรณ์ที่ยืม</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        function fetchData() {
+            let loadingMessage = document.getElementById("loadingMessage");
+            let table = document.getElementById("dataTable");
+            let tableBody = table.querySelector("tbody");
+
+            loadingMessage.style.display = "block"; // แสดงข้อความโปรดรอ
+            table.style.display = "none"; // ซ่อนตารางก่อนโหลดข้อมูล
+
+            fetch("https://script.google.com/macros/s/AKfycbxhE6XCKGNfjS8LVAciW4bL5CEg3yZYmTATw7xj7QAuE2IaYsQp6s8zjvZRr7MhDq4A/exec") 
+                .then(response => response.json())
+                .then(data => {
+                    tableBody.innerHTML = ""; // เคลียร์ข้อมูลเก่าก่อนแสดงข้อมูลใหม่
+                    data.forEach(row => {
+                        let tr = document.createElement("tr");
+                        tr.innerHTML = `<td>${row.id}</td><td>${row.name}</td><td>${row.info}</td>`;
+                        tableBody.appendChild(tr);
+                    });
+
+                    loadingMessage.style.display = "none"; // ซ่อนข้อความโปรดรอ
+                    table.style.display = "table"; // แสดงตาราง
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    loadingMessage.innerText = "เกิดข้อผิดพลาดในการโหลดข้อมูล!";
+                    loadingMessage.style.color = "red"; // เปลี่ยนข้อความเป็นสีแดงเมื่อเกิดข้อผิดพลาด
+                });
+        }
+    </script>
+
+</body>
+</html>
