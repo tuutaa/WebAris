@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ยืมอุปกรณ์</title>
     <style>
-        /* ให้หน้าเว็บเหมาะสมกับทุกขนาดหน้าจอ */
-        body {
+          /* ให้หน้าเว็บเหมาะสมกับทุกขนาดหน้าจอ */
+          body {
             margin: 0;
             font-family: Arial, sans-serif;
         }
@@ -104,57 +104,58 @@
         <h1>เลือกอุปกรณ์ที่ต้องการยืม</h1>
         <div id="shop">
             <div class="item">
-                <img src="png/462537251_1148853660185820_4083607689974932983_n.jpg" alt="Laptop"><br>
-                Laptop <br>
+                <img src="png/462537251_1148853660185820_4083607689974932983_n.jpg"><br>
+                จาเลงเจ๋งแจ๋ว <br>
                 <input type="number" id="laptopQty" min="1" value="1">
-                <button onclick="addToCart('Laptop', document.getElementById('laptopQty').value)">เพิ่มลงตะกร้า</button>
+                <button onclick="addToCart('จาเลงเจ๋งแจ๋ว', document.getElementById('laptopQty').value)">เพิ่มลงตะกร้า</button>
             </div>
             <div class="item">
-                <img src="png/462561848_1269802834272576_2180353974536705714_n.jpg" alt="Camera"><br>
-                กล้อง <br>
+                <img src="png/462561848_1269802834272576_2180353974536705714_n.jpg"><br>
+                พี่ตูน <br>
                 <input type="number" id="cameraQty" min="1" value="1">
-                <button onclick="addToCart('Camera', document.getElementById('cameraQty').value)">เพิ่มลงตะกร้า</button>
+                <button onclick="addToCart('พี่ตูน', document.getElementById('cameraQty').value)">เพิ่มลงตะกร้า</button>
             </div>
             <div class="item">
-                <img src="png/462562950_539205492246037_1921688717345430622_n.jpg" alt="Headphone"><br>
-                หูฟัง <br>
+                <img src="png/462562950_539205492246037_1921688717345430622_n.jpg"><br>
+                ฮิปโป <br>
                 <input type="number" id="headphoneQty" min="1" value="1">
-                <button onclick="addToCart('Headphone', document.getElementById('headphoneQty').value)">เพิ่มลงตะกร้า</button>
+                <button onclick="addToCart('ฮิปโป', document.getElementById('headphoneQty').value)">เพิ่มลงตะกร้า</button>
             </div>
             <div class="item">
-                <img src="png/467489760_563789979919691_7042015674998196239_n.jpg" alt="Projector"><br>
-                โปรเจคเตอร์ <br>
+                <img src="png/467489760_563789979919691_7042015674998196239_n.jpg"><br>
+                ตูนลิงบาบูด <br>
                 <input type="number" id="projectorQty" min="1" value="1">
-                <button onclick="addToCart('Projector', document.getElementById('projectorQty').value)">เพิ่มลงตะกร้า</button>
+                <button onclick="addToCart('ตูนลิงบาบูด', document.getElementById('projectorQty').value)">เพิ่มลงตะกร้า</button>
             </div>
             <div class="item">
-                <img src="png/471622323_923107446593541_4783946066010486161_n.jpg" alt="Microphone"><br>
-                ไมโครโฟน <br>
+                <img src="png/471622323_923107446593541_4783946066010486161_n.jpg"><br>
+                ชายตัวเล็ก <br>
                 <input type="number" id="microphoneQty" min="1" value="1">
-                <button onclick="addToCart('Microphone', document.getElementById('microphoneQty').value)">เพิ่มลงตะกร้า</button>
+                <button onclick="addToCart('ชายตัวเล็ก', document.getElementById('microphoneQty').value)">เพิ่มลงตะกร้า</button>
             </div>
             <div class="item">
-                <img src="png/473061501_588944184074349_3180139917156377230_n.jpg" alt="Tablet"><br>
-                แท็บเล็ต <br>
+                <img src="png/473061501_588944184074349_3180139917156377230_n.jpg"><br>
+                บักควยแว่น <br>
                 <input type="number" id="tabletQty" min="1" value="1">
-                <button onclick="addToCart('Tablet', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+                <button onclick="addToCart('บักควยแว่น', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
             </div>
         </div>
     </div>
 
     <div class="cart-container">
-        <h2>🛒 ตะกร้าสินค้า</h2>
+        <h2>ตะกร้าสินค้า</h2>
         <div id="cart"></div>
         <button onclick="showCheckout()">ยืนยันการยืม</button>
+            <!-- ข้อมูลผู้ยืม -->
+            <div class="checkout-container" id="checkout" style="display:none;">
+                <h2>ข้อมูลผู้ยืม</h2>
+                ชื่อ: <input type="text" id="name"><br>
+                รหัสนักศึกษา: <input type="text" id="studentId"><br>
+                เหตุผลในการยืม: <input type="text" id="reason"><br>
+            <button onclick="confirmBorrow()">บันทึกข้อมูล</button>
+        </div>
     </div>
 
-    <div id="checkout" style="display:none;">
-        <h2>ข้อมูลผู้ยืม</h2>
-        ชื่อ: <input type="text" id="name"><br>
-        รหัสนักศึกษา: <input type="text" id="studentId"><br>
-        เหตุผลในการยืม: <input type="text" id="reason"><br>
-        <button onclick="confirmBorrow()">บันทึกข้อมูล</button>
-    </div>
 
     <script>
         let cart = [];
@@ -176,7 +177,7 @@
             let borrowedList = JSON.parse(localStorage.getItem('borrowedEquipments')) || [];
             borrowedList.push({ name, studentId, reason, cart });
             localStorage.setItem('borrowedEquipments', JSON.stringify(borrowedList));
-            alert('บันทึกสำเร็จ!');
+            alert('บันทึกขอมูลการยืมสำเร็จสำเร็จ!');
             cart = [];
             updateCartDisplay();
             document.getElementById('checkout').style.display = 'none';
