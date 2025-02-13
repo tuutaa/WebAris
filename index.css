@@ -2,6 +2,7 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
+    background-color: #e0f7fa; /* สีพื้นหลังฟ้าอ่อน */
 }
 
 .container {
@@ -12,10 +13,11 @@ body {
 }
 
 .menu {
-    background: #333;
+    background: #0277bd; /* สีฟ้าเข้ม */
     padding: 10px;
     text-align: center;
     width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* เพิ่มเงา */
 }
 
 .menu button {
@@ -24,9 +26,14 @@ body {
     padding: 10px 20px;
     margin: 5px;
     cursor: pointer;
+    border-radius: 5px; /* มุมโค้ง */
+    transition: background 0.3s ease;
 }
 
-/* Grid สำหรับการแสดงรายการอุปกรณ์ */
+.menu button:hover {
+    background: #81d4fa; /* สีฟ้าพาสเทลเมื่อ hover */
+}
+
 #shop {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -37,17 +44,37 @@ body {
 
 .item {
     text-align: center;
+    border: 1px solid #0288d1; /* ขอบฟ้า */
+    padding: 10px;
+    border-radius: 10px; /* มุมโค้ง */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* เพิ่มเงา */
+    background-color: #ffffff; /* พื้นหลังของแต่ละไอเทม */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* ตะกร้า */ 
+.item:hover {
+    transform: scale(1.05); /* ขยายเมื่อ hover */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* เพิ่มเงาเมื่อ hover */
+}
+
+.item img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px; /* มุมโค้งของรูป */
+}
+
+/* ตะกร้า */
 .cart-container {
     position: fixed;
     right: 20px;
     top: 100px;
     width: 200px;
-    border: 1px solid black;
+    border: 1px solid #0277bd; /* ขอบฟ้าเข้ม */
     padding: 10px;
-    background: #f9f9f9;
+    background: #ffffff;
+    border-radius: 10px; /* มุมโค้ง */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* เพิ่มเงา */
 }
 
 table {
@@ -57,17 +84,32 @@ table {
 }
 
 table, th, td {
-    border: 1px solid black;
+    border: 1px solid #0288d1;
     padding: 10px;
     text-align: center;
+    background-color: #f1f8e9; /* สีพื้นหลังอ่อน */
 }
 
-/* ทำให้รูปภาพมีขนาดเป็นสี่เหลี่ยมจัตุรัส */
-.item img {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
+button {
+    background-color: #0277bd; /* สีฟ้าเข้ม */
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px; /* มุมโค้ง */
+    color: rgb(0, 0, 0); /* สีข้อความ */
+    font-size: 16px; /* ขนาดฟอนต์ */
+    transition: background-color 0.3s ease;
 }
+
+button:hover {
+    background-color: #0288d1; /* สีฟ้าเมื่อ hover */
+}
+
+button:active {
+    background-color: #01579b; /* สีฟ้าเข้มขึ้นเมื่อกด */
+}
+
 
 /* ปรับรูปแบบเมื่อหน้าจอขนาดเล็ก */
 @media (max-width: 768px) {
