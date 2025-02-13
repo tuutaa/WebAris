@@ -1,0 +1,91 @@
+/* ให้หน้าเว็บเหมาะสมกับทุกขนาดหน้าจอ */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 80%;
+    margin-left: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu {
+    background: #333;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+.menu button {
+    background: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+/* Grid สำหรับการแสดงรายการอุปกรณ์ */
+#shop {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.item {
+    text-align: center;
+}
+
+/* ตะกร้า */ 
+.cart-container {
+    position: fixed;
+    right: 20px;
+    top: 100px;
+    width: 200px;
+    border: 1px solid black;
+    padding: 10px;
+    background: #f9f9f9;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+
+/* ทำให้รูปภาพมีขนาดเป็นสี่เหลี่ยมจัตุรัส */
+.item img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+/* ปรับรูปแบบเมื่อหน้าจอขนาดเล็ก */
+@media (max-width: 768px) {
+    #shop {
+        grid-template-columns: repeat(2, 1fr); /* แสดง 2 คอลัมน์ */
+    }
+
+    .cart-container {
+        width: 150px; /* ปรับขนาดตะกร้า */
+    }
+}
+
+@media (max-width: 480px) {
+    #shop {
+        grid-template-columns: 1fr; /* แสดง 1 คอลัมน์ */
+    }
+
+    .cart-container {
+        width: 100px; /* ปรับขนาดตะกร้าให้เล็กลงในมือถือ */
+    }
+}

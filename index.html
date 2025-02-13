@@ -3,98 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
     <title>ยืมอุปกรณ์</title>
-    <style>
-          /* ให้หน้าเว็บเหมาะสมกับทุกขนาดหน้าจอ */
-          body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        .container {
-            width: 80%;
-            margin-left: 50px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .menu {
-            background: #333;
-            padding: 10px;
-            text-align: center;
-            width: 100%;
-        }
-
-        .menu button {
-            background: #fff;
-            border: none;
-            padding: 10px 20px;
-            margin: 5px;
-            cursor: pointer;
-        }
-
-        /* ใช้ Grid สำหรับการแสดงรายการอุปกรณ์ */
-        #shop {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
-
-        .item {
-            text-align: center;
-        }
-
-        .cart-container {
-            position: fixed;
-            right: 20px;
-            top: 100px;
-            width: 200px;
-            border: 1px solid black;
-            padding: 10px;
-            background: #f9f9f9;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        table, th, td {
-            border: 1px solid black;
-            padding: 10px;
-            text-align: center;
-        }
-
-        /* ทำให้รูปภาพมีขนาดเป็นสี่เหลี่ยมจัตุรัส */
-        .item img {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        /* ปรับรูปแบบเมื่อหน้าจอขนาดเล็ก */
-        @media (max-width: 768px) {
-            #shop {
-                grid-template-columns: repeat(2, 1fr); /* แสดง 2 คอลัมน์ */
-            }
-
-            .cart-container {
-                width: 150px; /* ปรับขนาดตะกร้า */
-            }
-        }
-
-        @media (max-width: 480px) {
-            #shop {
-                grid-template-columns: 1fr; /* แสดง 1 คอลัมน์ */
-            }
-
-            .cart-container {
-                width: 100px; /* ปรับขนาดตะกร้าให้เล็กลงในมือถือ */
-            }
-        }
-    </style>
 </head>
+
 <body>
     <div class="menu">
         <button onclick="window.location.href='status.html'">เช็คสถานะ</button>
@@ -103,42 +15,424 @@
     <div class="container">
         <h1>เลือกอุปกรณ์ที่ต้องการยืม</h1>
         <div id="shop">
+
             <div class="item">
-                <img src="png/462537251_1148853660185820_4083607689974932983_n.jpg"><br>
-                จาเลงเจ๋งแจ๋ว <br>
+                <img src="png/476231703_1151834476662317_5870014273620065284_n.jpg"><br>
+                Breadboard 400 hole <br>
                 <input type="number" id="laptopQty" min="1" value="1">
-                <button onclick="addToCart('จาเลงเจ๋งแจ๋ว', document.getElementById('laptopQty').value)">เพิ่มลงตะกร้า</button>
+                <button onclick="addToCart('Breadboard 400 hole', document.getElementById('laptopQty').value)">เพิ่มลงตะกร้า</button>
             </div>
             <div class="item">
-                <img src="png/462561848_1269802834272576_2180353974536705714_n.jpg"><br>
-                พี่ตูน <br>
+                <img src="png/476753642_2261252350941862_743709984712580075_n.jpg"><br>
+                Breadboard 830 hole <br>
                 <input type="number" id="cameraQty" min="1" value="1">
-                <button onclick="addToCart('พี่ตูน', document.getElementById('cameraQty').value)">เพิ่มลงตะกร้า</button>
+                <button onclick="addToCart('Breadboard 830 hole', document.getElementById('cameraQty').value)">เพิ่มลงตะกร้า</button>
             </div>
             <div class="item">
-                <img src="png/462562950_539205492246037_1921688717345430622_n.jpg"><br>
-                ฮิปโป <br>
+                <img src="png//476580867_425412637260914_8573061338378950182_n.jpg"><br>
+                Water test module <br>
                 <input type="number" id="headphoneQty" min="1" value="1">
-                <button onclick="addToCart('ฮิปโป', document.getElementById('headphoneQty').value)">เพิ่มลงตะกร้า</button>
+                <button onclick="addToCart('Water test module', document.getElementById('headphoneQty').value)">เพิ่มลงตะกร้า</button>
             </div>
             <div class="item">
-                <img src="png/467489760_563789979919691_7042015674998196239_n.jpg"><br>
-                ตูนลิงบาบูด <br>
+                <img src="png/476380029_385429407996232_3465269881401889979_n.jpg"><br>
+                4-digit display <br>
                 <input type="number" id="projectorQty" min="1" value="1">
-                <button onclick="addToCart('ตูนลิงบาบูด', document.getElementById('projectorQty').value)">เพิ่มลงตะกร้า</button>
+                <button onclick="addToCart('4-digit display', document.getElementById('projectorQty').value)">เพิ่มลงตะกร้า</button>
             </div>
+
+
             <div class="item">
-                <img src="png/471622323_923107446593541_4783946066010486161_n.jpg"><br>
-                ชายตัวเล็ก <br>
+                <img src="png/477468788_1841827256551583_8836336680346083390_n.jpg"><br>
+                LED คละสี <br>
                 <input type="number" id="microphoneQty" min="1" value="1">
-                <button onclick="addToCart('ชายตัวเล็ก', document.getElementById('microphoneQty').value)">เพิ่มลงตะกร้า</button>
+                <button onclick="addToCart('LED คละสี', document.getElementById('microphoneQty').value)">เพิ่มลงตะกร้า</button>
             </div>
             <div class="item">
-                <img src="png/473061501_588944184074349_3180139917156377230_n.jpg"><br>
-                บักควยแว่น <br>
+                <img src="png/477573776_488210810773394_6778547726682520704_n.jpg"><br>
+                IR Reciever <br>
                 <input type="number" id="tabletQty" min="1" value="1">
-                <button onclick="addToCart('บักควยแว่น', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+                <button onclick="addToCart('IR Reciever', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
             </div>
+            <div class="item">
+                <img src="png/476071158_999855448713507_2925226830179119022_n.jpg"><br>
+                Humidity and Temperature <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('Humidity and Temperature', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476020986_936074035345832_1060697054368901979_n.jpg"><br>
+                Photoresistor Sensor Module <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('Photoresistor Sensor Module', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+
+
+            <div class="item">
+                <img src="png/476217533_1178561277201489_3037833561184595939_n.jpg"><br>
+                IC 74HC595 <br>
+                <input type="number" id="microphoneQty" min="1" value="1">
+                <button onclick="addToCart('IC 74HC595', document.getElementById('microphoneQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476587270_2379907092387150_8094528854502756741_n.jpg"><br>
+                Servo SG90 <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('Servo SG90', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476412766_1701844427350778_4103177697231386067_n.jpg"><br>
+                Steppermotor driver board <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('Steppermotor driver board', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/475983751_1333815807869692_926071078180465748_n.jpg"><br>
+                Step motor 28BYJ48 5V <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('Step motor 28BYJ48 5V', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+
+
+            <div class="item">
+                <img src="png/476128557_3815470592048295_9136763626537902610_n.jpg"><br>
+                Motor 5V <br>
+                <input type="number" id="microphoneQty" min="1" value="1">
+                <button onclick="addToCart('Motor 5V', document.getElementById('microphoneQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476611590_2108145059631792_8043351310950695446_n.jpg"><br>
+                L298N Dual H-Beidge Motor driver<br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('L298N Dual H-Beidge Motor driver', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476597898_657424606963410_1117284601704712705_n.jpg"><br>
+                100 ohm / 5 W Resistors <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('100 ohm / 5 W Resistors', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476153785_635984155639091_7035633004625345589_n.jpg"><br>
+                1 μF / 50 V Capacitors <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('1 μF / 50 V Capacitors', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+
+            
+            <div class="item">
+                <img src="png/476035706_1561676571201835_4778633241444703179_n.jpg"><br>
+                W04M Diode Bridge <br>
+                <input type="number" id="microphoneQty" min="1" value="1">
+                <button onclick="addToCart('W04M Diode Bridge', document.getElementById('microphoneQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/475026225_1136591790951029_2056787942122185078_n.jpg"><br>
+                Relay Module <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('Relay Module', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476574594_1341751077276543_9133740072292796441_n.jpg"><br>
+                Terminal Block <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('Terminal Block', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476059262_946355281042984_2225392347508002362_n.jpg"><br>
+                Ball Switch <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('Ball Switch', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+
+
+            <div class="item">
+                <img src="png/476030691_496876023457128_3770065286542046257_n.jpg"><br>
+                Buzzer x2 <br>
+                <input type="number" id="microphoneQty" min="1" value="1">
+                <button onclick="addToCart('Buzzer x2', document.getElementById('microphoneQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476061400_1302614490947801_6521647291809339030_n.jpg"><br>
+                SUNON KD1206PHS2 (Fan) <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('SUNON KD1206PHS2 (Fan)', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476203971_1550848315632185_6687533432759482976_n.jpg"><br>
+                Node MCU base Ver1.0 <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('Node MCU base Ver1.0', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/475982688_1420216449357541_679179344340398635_n.jpg"><br>
+                Arduino UNO board <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('Arduino UNO board', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+
+
+            <div class="item">
+                <img src="png/475983751_1343886196615742_3167624635119802044_n.jpg"><br>
+                MOSFET <br>
+                <input type="number" id="microphoneQty" min="1" value="1">
+                <button onclick="addToCart('MOSFET', document.getElementById('microphoneQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476577621_592854803572018_1033159668520744535_n.jpg"><br>
+                47 μF / 25 V Capacitors <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('3.3 μF Capacitors', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476565378_1721735271707463_7705308983926092734_n.jpg"><br>
+                100 μF / 25 V Capacitors <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('100 μF / 16 V Capacitors', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476326116_2415218718824983_3138836157032071131_n.jpg"><br>
+                Diode <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('Diode', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+
+
+            <div class="item">
+                <img src="png/476200602_990091839673591_2559334783358396841_n.jpg"><br>
+                100 μF / 50 V Capacitors <br>
+                <input type="number" id="microphoneQty" min="1" value="1">
+                <button onclick="addToCart('100 μF / 50 V Capacitors', document.getElementById('microphoneQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476471856_542149535561714_2662374028458085977_n.jpg"><br>
+                ESP8266 Board <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('ESP8266 Board', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/477691291_1255280192919410_6570040090905958159_n.jpg"><br>
+                Sensor Sheild V 5.0 <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('Sensor Sheild V 5.0', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476128557_1317796066208320_9076831993825925488_n.jpg"><br>
+                ESP WROOM-32 WIFI <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('ESP WROOM-32 WIFI', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+
+
+            <div class="item">
+                <img src="png/476301642_410143052155878_5149233387673390231_n.jpg"><br>
+                4x4 Key board <br>
+                <input type="number" id="microphoneQty" min="1" value="1">
+                <button onclick="addToCart('4x4 Key board', document.getElementById('microphoneQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476590867_1303167117393902_8503718224208950085_n.jpg"><br>
+                Clock module <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('Clock module', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476032836_9182781915130782_7209397033812416872_n.jpg"><br>
+                9V battery snap <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('9V battery snap', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476067755_3665772237046811_312059449323213937_n.jpg"><br>
+                1-digit display <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('1-digit display', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+
+
+            <div class="item">
+                <img src="png/476321050_660962799830925_5786032342149262085_n.jpg"><br>
+                MH-Sensor-Series Accelerometer ADXL345 <br>
+                <input type="number" id="microphoneQty" min="1" value="1">
+                <button onclick="addToCart('MH-Sensor-Series Accelerometer ADXL345', document.getElementById('microphoneQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476279250_971379791220084_8211793365072177594_n.jpg"><br>
+                Servo arm SG90 <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('Servo arm SG90', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476218638_648666580881314_6886828696876752197_n.jpg"><br>
+                DC Plug 2.1 mm <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('DC Plug 2.1 mm', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476123375_982351203284682_4193124688020912231_n.jpg"><br>
+                Remote control <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('Remote control', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+
+
+            <div class="item">
+                <img src="png/476414405_1798033097717843_5753956967289667773_n.jpg"><br>
+                8x8 Dot Metrix <br>
+                <input type="number" id="microphoneQty" min="1" value="1">
+                <button onclick="addToCart('8x8 Dot Metrix', document.getElementById('microphoneQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476027935_1318164052758906_6586428129082458289_n.jpg"><br>
+                Sound Module <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('Sound Module', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476186495_481957311444071_5911693012735654062_n.jpg"><br>
+                XY Joystick <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('XY Joystick', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476341635_1161614022360051_5097758052491680024_n.jpg"><br>
+                DC Motor <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('DC Motor', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+
+
+            <div class="item">
+                <img src="png/476192225_951605286688204_4602839054634304593_n.jpg"><br>
+                Limit Switch <br>
+                <input type="number" id="microphoneQty" min="1" value="1">
+                <button onclick="addToCart('Limit Switch', document.getElementById('microphoneQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476563061_1542983983055925_5729917955751004042_n.jpg"><br>
+                IIC 1602 LCD <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('IIC 1602 LCD', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476283174_594059893525155_5034060034221091063_n.jpg"><br>
+                USB 2.0 Type A to Type B <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('USB 2.0 Type A to Type B', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476586560_981011520044218_138059619525183293_n.jpg"><br>
+                USB 2.0 Type A to MicroUSB <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('USB 2.0 Type A to MicroUSB', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+
+
+            <div class="item">
+                <img src="png/476053136_1729537264276029_8825856171020598645_n.jpg"><br>
+                1K ohm <br>
+                <input type="number" id="microphoneQty" min="1" value="1">
+                <button onclick="addToCart('1K ohm', document.getElementById('microphoneQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476025812_1280126323103459_2932102129529705822_n.jpg"><br>
+                10k ohm <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('10k ohm', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476300889_1953453578397756_3888347808303509212_n.jpg"><br>
+                330 ohm <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('330 ohm', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476288886_1366193564543320_5422019436279768144_n.jpg"><br>
+                100 ohm <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('100 ohm', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+
+
+            <div class="item">
+                <img src="png/476345471_1185971252955097_3280369031879211306_n.jpg"><br>
+                240 ohm <br>
+                <input type="number" id="microphoneQty" min="1" value="1">
+                <button onclick="addToCart('240 ohm', document.getElementById('microphoneQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476100241_1380446866300909_7312739395065879496_n.jpg"><br>
+                470 ohm <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('470 ohm', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476648596_661431673048244_1720660034386557848_n.jpg"><br>
+                Resistors Pack <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('Resistors Pack', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476019842_663839472640032_335867225301988051_n.jpg"><br>
+                Jumper เมีย-เมีย <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('Jumper เมีย-เมีย', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+
+
+            <div class="item">
+                <img src="png/476102500_958261419303954_6489259110534197534_n.jpg"><br>
+                Potentionmeter <br>
+                <input type="number" id="microphoneQty" min="1" value="1">
+                <button onclick="addToCart('Potentionmeter', document.getElementById('microphoneQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/477137946_960532615757401_2390463170955501206_n.jpg"><br>
+                2.54 mm Pin <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('2.54 mm Pin', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/475402042_623433927301425_6413626984052629698_n.jpg"><br>
+                Jumper ผู้-เมีย <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('Resistors Pack', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476005006_508569681874440_834310162850670972_n.jpg"><br>
+                Jumper ผู้-ผู้ <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('Jumper เมีย-เมีย', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+
+
+            <div class="item">
+                <img src="png/476586560_489383393981760_7376101443880959830_n.jpg"><br>
+                RGB 3 color module <br>
+                <input type="number" id="microphoneQty" min="1" value="1">
+                <button onclick="addToCart('RGB 3 color module', document.getElementById('microphoneQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476192225_953788496468631_2451327620698491332_n.jpg"><br>
+                RFID Module <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('RFID Module', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476153785_2315288055510543_1103724440126822432_n.jpg"><br>
+                RFID White card <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('RFID White card', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+            <div class="item">
+                <img src="png/476516407_28913353664922525_8008649415331062015_n.jpg"><br>
+                RFID Keychain <br>
+                <input type="number" id="tabletQty" min="1" value="1">
+                <button onclick="addToCart('RFID Keychain', document.getElementById('tabletQty').value)">เพิ่มลงตะกร้า</button>
+            </div>
+
+
+
         </div>
     </div>
 
