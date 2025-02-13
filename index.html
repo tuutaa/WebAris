@@ -12,8 +12,12 @@
         <button onclick="window.location.href='status.html'">เช็คสถานะ</button>
     </div>
 
+    
     <div class="container">
         <h1>เลือกอุปกรณ์ที่ต้องการยืม</h1>
+        <!-- ช่องค้นหา -->
+        <input type="text" id="searchBox" placeholder="ค้นหาอุปกรณ์..." onkeyup="filterItems()">
+
         <div id="shop">
 
             <div class="item">
@@ -457,13 +461,31 @@
             cart.push({ item, quantity });
             updateCartDisplay();
         }
+
         function updateCartDisplay() {
             let cartDiv = document.getElementById('cart');
             cartDiv.innerHTML = cart.map(c => `${c.item} x ${c.quantity}`).join('<br>');
         }
+
+          // ฟังก์ชันการค้นหาอุปกรณ์
+          function filterItems() {
+            let searchQuery = document.getElementById('searchBox').value.toLowerCase();
+            let items = document.querySelectorAll('.item');
+            
+            items.forEach(item => {
+                let itemName = item.textContent.toLowerCase();
+                if (itemName.includes(searchQuery)) {
+                    item.style.display = 'block'; // แสดงอุปกรณ์ที่ตรงกับคำค้น
+                } else {
+                    item.style.display = 'none'; // ซ่อนอุปกรณ์ที่ไม่ตรงกับคำค้น
+                }
+            });
+        }
+
         function showCheckout() {
             document.getElementById('checkout').style.display = 'block';
         }
+
         function confirmBorrow() {
             let name = document.getElementById('name').value;
             let studentId = document.getElementById('studentId').value;
