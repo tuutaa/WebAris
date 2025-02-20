@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-    width: 90%; /* ปรับขนาดให้เหมาะสม */
+    width: 100%; /* ปรับขนาดให้เหมาะสม */
     max-width: 1200px; /* ขนาดสูงสุด */
     margin: 0 auto; /* จัดกลาง */
     display: flex;
