@@ -6,8 +6,9 @@ body {
 }
 
 .container {
-    width: 80%;
-    margin-left: 50px;
+    width: 90%; /* ปรับขนาดให้เหมาะสม */
+    max-width: 1200px; /* ขนาดสูงสุด */
+    margin: 0 auto; /* จัดกลาง */
     display: flex;
     flex-direction: column;
 }
@@ -21,13 +22,14 @@ body {
 }
 
 .menu button {
-    background: #fff;
+    background: #00446b;
     border: none;
     padding: 10px 20px;
     margin: 5px;
     cursor: pointer;
     border-radius: 5px; /* มุมโค้ง */
     transition: background 0.3s ease;
+    font-weight: bold; /* ทำให้ข้อความหนาขึ้น */
 }
 
 .menu button:hover {
@@ -36,7 +38,8 @@ body {
 
 /* ช่องค้นหา */
 #searchBox {
-    width: 40%;
+    width: 100%; /* ปรับให้เต็มความกว้าง */
+    max-width: 400px; /* ขนาดสูงสุด */
     padding: 10px;
     margin: 10px 0;
     border: 2px solid #0277bd;
@@ -44,6 +47,7 @@ body {
     font-size: 16px;
 }
 
+/* ร้านค้า */
 #shop {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -68,44 +72,49 @@ body {
 }
 
 .item img {
-    width: 200px;
-    height: 200px;
+    width: 100%; /* ปรับให้เต็มความกว้าง */
+    height: auto; /* ปรับอัตโนมัติ */
+    max-width: 200px; /* ขนาดสูงสุด */
     object-fit: cover;
     border-radius: 5px; /* มุมโค้งของรูป */
 }
-
-/* ปรับแต่งช่องจำนวน */
-input[type="number"] {
-    width: 60px;
-    padding: 10px;
-    text-align: center;
-    font-size: 16px;
-    border: 2px solid #0288d1;
-    border-radius: 5px;
-    background-color: white;
-    color: #333;
-    margin: 10px 5px;
-    transition: border-color 0.3s ease;
-}
-
-/* ปรับสไตล์เมื่อผู้ใช้โฟกัสที่ input */
-input[type="number"]:focus {
-    border-color: #02a7ff;
-    outline: none;
-}
-
 
 /* ตะกร้า */
 .cart-container {
     position: fixed;
     right: 20px;
     top: 100px;
-    width: 200px;
+    width: 400px; /* ปรับขนาดตะกร้า */
     border: 1px solid #0277bd; /* ขอบฟ้าเข้ม */
     padding: 10px;
     background: #ffffff;
     border-radius: 10px; /* มุมโค้ง */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* เพิ่มเงา */
+    z-index: 1000; /* ให้ตะกร้าอยู่ด้านบน */
+}
+
+.cart-container h2 {
+    font-size: 18px; /* ขนาดฟอนต์หัวข้อ */
+    margin: 0 0 10px; /* ระยะห่าง */
+}
+
+.btn-quantity {
+    background-color: #81d4fa; /* สีฟ้าพาสเทล */
+    border: none;
+    padding: 5px 10px; /* ขนาดเล็กลง */
+    margin: 2px; /* ระยะห่าง */
+    cursor: pointer;
+    border-radius: 5px; /* มุมโค้ง */
+    font-size: 14px; /* ขนาดฟอนต์เล็กลง */
+    transition: background-color 0.3s ease;
+}
+
+.btn-quantity:hover {
+    background-color: #4fc3f7; /* สีฟ้าเข้มขึ้นเมื่อ hover */
+}
+
+.btn-quantity:active {
+    background-color: #0288d1; /* สีฟ้าเข้มเมื่อกด */
 }
 
 table {
@@ -128,7 +137,7 @@ button {
     margin: 5px;
     cursor: pointer;
     border-radius: 5px; /* มุมโค้ง */
-    color: rgb(0, 0, 0); /* สีข้อความ */
+    color: rgb(255, 255, 255); /* สีข้อความ */
     font-size: 16px; /* ขนาดฟอนต์ */
     transition: background-color 0.3s ease;
 }
@@ -141,7 +150,6 @@ button:active {
     background-color: #01579b; /* สีฟ้าเข้มขึ้นเมื่อกด */
 }
 
-
 /* ปรับรูปแบบเมื่อหน้าจอขนาดเล็ก */
 @media (max-width: 768px) {
     #shop {
@@ -149,7 +157,7 @@ button:active {
     }
 
     .cart-container {
-        width: 150px; /* ปรับขนาดตะกร้า */
+        width: 180px; /* ปรับขนาดตะกร้า */
     }
 }
 
@@ -159,6 +167,10 @@ button:active {
     }
 
     .cart-container {
-        width: 100px; /* ปรับขนาดตะกร้าให้เล็กลงในมือถือ */
+        width: 150px; /* ปรับขนาดตะกร้าให้เล็กลงในมือถือ */
+    }
+
+    #searchBox {
+        width: 100%; /* ปรับให้เต็มความกว้าง */
     }
 }

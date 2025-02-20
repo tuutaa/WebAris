@@ -50,7 +50,17 @@
 
         function returnItem(index) {
             let borrowedList = JSON.parse(localStorage.getItem('borrowedEquipments')) || [];
-            
+            let entry = borrowedList[index];
+
+            // Update stock quantities
+            entry.cart.forEach(c => {
+                let stock = JSON.parse(localStorage.getItem('stock')) || {};
+                if (stock[c.item] !== undefined) {
+                    stock[c.item] += c.quantity; // เพิ่มจำนวนสินค้าคงเหลือ
+                }
+                localStorage.setItem('stock', JSON.stringify(stock)); // บันทึกข้อมูลลง localStorage
+            });
+
             // Remove the item from the borrowed list
             borrowedList.splice(index, 1);
             
