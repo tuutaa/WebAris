@@ -1,0 +1,105 @@
+/* ให้หน้าเว็บเหมาะสมกับทุกขนาดหน้าจอ */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e0f7fa; /* สีพื้นหลังฟ้าอ่อน */
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* ทำให้เนื้อหาจัดกลาง */
+}
+
+.menu {
+    background: #0277bd; /* สีฟ้าเข้ม */
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* เพิ่มเงา */
+}
+
+.menu button {
+    background: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px; /* มุมโค้ง */
+    transition: background 0.3s ease;
+    font-weight: bold; /* ทำให้ข้อความหนาขึ้น */
+}
+
+.menu button:hover {
+    background: #81d4fa; /* สีฟ้าพาสเทลเมื่อ hover */
+}
+
+table {
+    width: 80%; /* ทำให้ตารางมีความกว้างไม่เกิน 80% ของหน้าจอ */
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff; /* พื้นหลังสีขาว */
+    border-radius: 10px; /* มุมโค้งของตาราง */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* เพิ่มเงาให้ตาราง */
+}
+
+table, th, td {
+    border: 1px solid #0277bd; /* ขอบสีฟ้า */
+    padding: 10px;
+    text-align: center;
+    background-color: #f1f8e9; /* สีพื้นหลังอ่อน */
+}
+
+th {
+    background-color: #0288d1; /* สีฟ้าเข้มสำหรับหัวตาราง */
+    color: #ffffff; /* ตัวอักษรสีขาว */
+}
+
+td {
+    background-color: #ffffff; /* สีพื้นหลังของเซลล์ */
+    color: #0277bd; /* ตัวอักษรสีฟ้า */
+}
+
+button {
+    background-color: #0277bd; /* สีฟ้าเข้ม */
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px; /* มุมโค้ง */
+    color: rgb(0, 0, 0); /* สีข้อความ */
+    font-size: 16px; /* ขนาดฟอนต์ */
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0288d1; /* สีฟ้าเมื่อ hover */
+}
+
+button:active {
+    background-color: #01579b; /* สีฟ้าเข้มขึ้นเมื่อกด */
+}
+
+
+/* เพิ่มการจัดเรียงเนื้อหา */
+.container {
+    padding: 20px;
+}
+
+/* ปรับรูปแบบเมื่อหน้าจอขนาดเล็ก */
+@media (max-width: 768px) {
+    table {
+        width: 100%; /* ทำให้ตารางเต็มหน้าจอในอุปกรณ์ที่มีหน้าจอขนาดเล็ก */
+    }
+}
+
+@media (max-width: 480px) {
+    .menu button {
+        padding: 8px 16px; /* ปรับขนาดปุ่มในมือถือ */
+    }
+
+    table {
+        width: 100%; /* ทำให้ตารางเต็มหน้าจอในมือถือ */
+    }
+}
