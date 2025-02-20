@@ -9,7 +9,7 @@
 
 <body>
     <div class="menu">
-        <button onclick="window.location.href='status.html'">เช็คสถานะ</button>
+        <button onclick="window.location.href='status2.html'">เช็คสถานะ</button>
     </div>
 
     <div class="container">
@@ -553,24 +553,8 @@
             }
         
             updateCartDisplay();
-            checkStock(); // ตรวจสอบและอัปเดตปุ่มเพิ่มลงตะกร้า
         }
 
-        function checkStock() {
-            document.querySelectorAll('.item').forEach(item => {
-                const itemName = item.getAttribute('data-name');
-                const stockQuantity = stock[itemName] || 0;
-                const button = item.querySelector('button');
-        
-                if (stockQuantity === 0) {
-                    button.disabled = true;
-                    button.textContent = "สินค้าหมด";
-                } else {
-                    button.disabled = false;
-                    button.textContent = "เพิ่มลงตะกร้า";
-                }
-            });
-        }
 
         function updateCartDisplay() {
             const cartDiv = document.getElementById('cart');
