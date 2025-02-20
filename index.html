@@ -444,7 +444,7 @@
             ชื่อ: <input type="text" id="name"><br>
             รหัสนักศึกษา: <input type="text" id="studentId"><br>
             เหตุผลในการยืม: <input type="text" id="reason"><br>
-            <button onclick="confirmBorrow()">บันทึกข้อมูล</button>
+            <button onclick="sendDataToSheets()">บันทึกข้อมูล</button>
         </div>
     </div>
 
@@ -517,18 +517,17 @@
             "RFID Keychain": 10
         };
 
-        // ฟังก์ชันเพื่อโหลดข้อมูลจาก localStorage
-        function loadStock() {
-            const savedStock = JSON.parse(localStorage.getItem('stock'));
-            if (savedStock) {
-                stock = savedStock;
-            }
+        /*ฟังชันหาอุปกรณ์ในแทบค้นหา*/
+        function filterItems() {
+            const searchQuery = document.getElementById('searchBox').value.toLowerCase();
+            const items = document.querySelectorAll('.item');
+            
+            items.forEach(item => {
+                const itemName = item.getAttribute('data-name').toLowerCase();
+                item.style.display = itemName.includes(searchQuery) ? 'block' : 'none';
+            });
         }
 
-        // ฟังก์ชันเพื่อบันทึกข้อมูลลง localStorage
-        function saveStock() {
-            localStorage.setItem('stock', JSON.stringify(stock));
-        }
 
         function addToCart(item, quantity) {
             if (stock[item] === 0) {
@@ -572,15 +571,7 @@
                 }
             });
         }
-        
 
-        function clearLocalStorage() {
-            localStorage.clear(); // ล้างข้อมูลทั้งหมดใน Local Storage
-            alert("ล้างข้อมูลสำเร็จ!");
-            location.reload(); // รีเฟรชหน้าเว็บ
-        }
-
-        
         function updateCartDisplay() {
             const cartDiv = document.getElementById('cart');
             cartDiv.innerHTML = cart.map((c, index) => `
@@ -593,7 +584,15 @@
                 <br>
             `).join('') || 'ไม่มีสินค้าในตะกร้า';
         }
-        
+
+        function showCheckout() {
+            document.getElementById('checkout').style.display = 'block';
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartDisplay();
+        }
 
         function changeQuantity(index, delta) {
             const item = cart[index].item;
@@ -613,66 +612,69 @@
             cart[index].quantity += delta;
             updateCartDisplay();
         }
-        
 
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartDisplay();
-        }
 
-        function filterItems() {
-            const searchQuery = document.getElementById('searchBox').value.toLowerCase();
-            const items = document.querySelectorAll('.item');
-            
-            items.forEach(item => {
-                const itemName = item.getAttribute('data-name').toLowerCase();
-                item.style.display = itemName.includes(searchQuery) ? 'block' : 'none';
-            });
-        }
 
-        function showCheckout() {
-            document.getElementById('checkout').style.display = 'block';
-        }
 
-        function updateStock() {
-            cart.forEach(c => {
-                if (stock[c.item] !== undefined) {
-                    stock[c.item] -= c.quantity;
-                    if (stock[c.item] < 0) {
-                        stock[c.item] = 0; // Ensure stock doesn't go negative
-                    }
-                    // Update the displayed stock quantity in the UI
-                    const itemElement = document.querySelector(`.item[data-name="${c.item}"] .stock-quantity`);
-                    if (itemElement) {
-                        itemElement.textContent = stock[c.item];
-                    }
-                }
-            });
-            saveStock(); // Save updated stock to localStorage
-        }
 
-        function confirmBorrow() {
+        const API_URL = "https://script.google.com/macros/s/AKfycbxLagW1_4cbF6JDDogQq4NPeHpYguf0XjPdoX7RqY6mWm2zh8FVneBxKon59gwuou0i/exec"; // ใส่ URL API ที่ได้จาก Apps Script
+
+        // ส่งข้อมูลไปยัง Google Sheets
+        function sendDataToSheets() {
             const name = document.getElementById('name').value;
             const studentId = document.getElementById('studentId').value;
             const reason = document.getElementById('reason').value;
-            const borrowedList = JSON.parse(localStorage.getItem('borrowedEquipments')) || [];
-            borrowedList.push({ name, studentId, reason, cart });
-            localStorage.setItem('borrowedEquipments', JSON.stringify(borrowedList));
-            
-            updateStock(); // Update stock after confirming borrow
 
-            alert('บันทึกข้อมูลการยืมสำเร็จ!');
-            cart = [];
-            updateCartDisplay();
-            document.getElementById('checkout').style.display = 'none';
+            if (!name || !studentId || !reason || cart.length === 0) {
+                alert("กรุณากรอกข้อมูลให้ครบและเลือกอุปกรณ์");
+                return;
+            }
+
+            // สร้าง iframe แบบซ่อน
+            const iframeName = 'hidden_iframe_' + Date.now();
+            const iframe = document.createElement('iframe');
+            iframe.name = iframeName;
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+
+            // สร้างฟอร์ม
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = API_URL;
+            form.target = iframeName;
+
+            // เพิ่ม input fields
+            function addField(name, value) {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = name;
+                input.value = value;
+                form.appendChild(input);
+            }
+
+            addField('name', name);
+            addField('studentId', studentId);
+            addField('reason', reason);
+            addField('cart', JSON.stringify(cart));
+
+            // เพิ่มฟอร์มลงในเอกสาร
+            document.body.appendChild(form);
+
+            // เมื่อ iframe โหลดเสร็จ (ส่งข้อมูลสำเร็จ)
+            iframe.onload = function() {
+                alert("บันทึกข้อมูลสำเร็จ!");
+                cart = [];
+                updateCartDisplay();
+                
+                // ลบฟอร์มและ iframe
+                document.body.removeChild(form);
+                document.body.removeChild(iframe);
+            };
+
+            // ส่งฟอร์ม
+            form.submit();
         }
 
-        // โหลดข้อมูลเมื่อหน้าเว็บถูกโหลด
-        window.onload = function() {
-            loadStock();
-            checkStock(); // ตรวจสอบจำนวนสินค้าคงเหลือ
-        };
-        
     </script>
 </body>
 </html>
