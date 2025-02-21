@@ -207,22 +207,10 @@ button.out-of-stock:active {
     }
 
     .cart-container {
-        width: 90%; /* ปรับขนาดให้เล็กลง */
+        width: 50%; /* ปรับขนาดให้เล็กลง */
         right: 2.5%;
         top: 100px;
         font-size: 10px; /* ลดขนาดฟอนต์ */
     }
 
-    .item {
-        padding: 5px;
-    }
-
-    .item img {
-        max-width: 130px;
-    }
-
-    button {
-        font-size: 12px;
-        padding: 8px;
-    }
 }
