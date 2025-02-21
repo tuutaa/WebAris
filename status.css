@@ -1,17 +1,52 @@
 @import url('index.css');
 
+/* ปรับ container ให้แสดงผลดีบนมือถือ */
 .container {
     max-width: 1000px;
     margin: 20px auto;
-    padding: 20px;
+    padding: 15px;
     background: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    align-items: center; /* จัดให้อยู่ตรงกลางแนวแกน X */
+    align-items: center;
 }
 
+/* ปรับตารางให้เลื่อนซ้าย-ขวาได้ */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* ปรับขนาดตาราง */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    overflow-x: auto;
+    display: block;
+    min-width: 600px; /* ป้องกันตารางแคบเกินไป */
+}
+
+table, th, td {
+    border: 1px solid #0288d1;
+    padding: 8px;
+    text-align: center;
+    background-color: #ffffff;
+    font-size: 14px;
+}
+
+/* ป้องกันข้อความในคอลัมน์ 1, 2, 5 ขึ้นบรรทัดใหม่ */
+td:nth-child(1), td:nth-child(2), td:nth-child(5), 
+th:nth-child(1), th:nth-child(2), th:nth-child(5) {
+    white-space: nowrap;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ปรับปุ่มให้เหมาะกับ iPhone */
 .container button {
     background: #0277bd;
     border: none;
@@ -19,43 +54,45 @@
     max-width: 100px;
     margin: 5px;
     cursor: pointer;
-    border-radius: 5px; /* มุมโค้ง */
+    border-radius: 5px;
     transition: background 0.3s ease;
-    font-weight: bold; /* ทำให้ข้อความหนาขึ้น */
+    font-weight: bold;
 }
+
 .container button:hover {
-    background: #81d4fa; /* สีฟ้าพาสเทลเมื่อ hover */
+    background: #81d4fa;
 }
 
+/* Media Queries สำหรับ iPhone */
+@media (max-width: 768px) {
+    .table-wrapper {
+        overflow-x: scroll;
+    }
 
-h1 {
-    text-align: center;
-    color: #0277bd;
+    table {
+        font-size: 12px;
+    }
+
+    td {
+        padding: 5px;
+    }
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
+@media (max-width: 480px) {
+    .table-wrapper {
+        overflow-x: scroll;
+    }
 
-table, th, td {
-    border: 1px solid #0288d1;
-    padding: 10px;
-    text-align: center;
-    background-color: #ffffff;
-}
+    table {
+        font-size: 10px;
+    }
 
-th {
-    background-color: #0277bd;
-    color: white;
-}
+    td, th {
+        padding: 5px;
+    }
 
-/* ป้องกันข้อความในคอลัมน์ 1, 2, 5 ขึ้นบรรทัดใหม่ */
-td:nth-child(1), td:nth-child(2), td:nth-child(5), 
-th:nth-child(1), th:nth-child(2), th:nth-child(5) {
-    white-space: nowrap; /* ห้ามขึ้นบรรทัดใหม่ */
-    max-width: 150px; /* กำหนดขนาดสูงสุด (แก้ไขตามต้องการ) */
-    overflow: hidden; /* ซ่อนข้อความที่เกิน */
-    text-overflow: ellipsis; /* ใส่ ... ถ้าข้อความยาวเกิน */
+    button {
+        font-size: 12px;
+        padding: 8px;
+    }
 }

@@ -13,22 +13,24 @@
     </div>
 
     <div class="container">
-        <h1>ข้อมูลของผู้ยืมอุปกรณ์</h1>
+        <h1 id="title">ข้อมูลของผู้ยืมอุปกรณ์</h1>
         <button onclick="fetchData()">เช็คข้อมูล</button>
-        <table>
-            <thead>
-                <tr>
-                    <th>ชื่อ</th>
-                    <th>รหัสนักศึกษา</th>
-                    <th>เหตุผล</th>
-                    <th>อุปกรณ์ที่ยืม</th>
-                    <th>วันที่-เวลา ในการยืม</th>
-                </tr>
-            </thead>
-            <tbody id="data-table">
-                <tr><td colspan="5">กดปุ่ม "เช็คข้อมูล" เพื่อโหลดข้อมูล</td></tr>
-            </tbody>
-        </table>
+        <div class="table-wrapper" style="display: none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ชื่อ</th>
+                        <th>รหัสนักศึกษา</th>
+                        <th>เหตุผล</th>
+                        <th>อุปกรณ์ที่ยืม</th>
+                        <th>วันที่-เวลา ในการยืม</th>
+                    </tr>
+                </thead>
+                <tbody id="data-table">
+                    <tr><td colspan="5">กดปุ่ม "เช็คข้อมูล" เพื่อโหลดข้อมูล</td></tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script>
@@ -39,6 +41,12 @@
                 const response = await fetch(API_URL);
                 const data = await response.json();
                 const tableBody = document.getElementById("data-table");
+                const tableWrapper = document.querySelector(".table-wrapper");
+                const title = document.getElementById("title");
+
+                // แสดงหัวข้อและตาราง
+                title.style.display = "block";
+                tableWrapper.style.display = "block";
                 tableBody.innerHTML = "";
 
                 data.forEach(entry => {
