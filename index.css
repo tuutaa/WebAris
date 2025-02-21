@@ -210,7 +210,17 @@ button.out-of-stock:active {
         width: 50%; /* ปรับขนาดให้เล็กลง */
         right: 2.5%;
         top: 100px;
-        font-size: 10px; /* ลดขนาดฟอนต์ */
+        font-size: 14px; /* ลดขนาดฟอนต์ */
+    }
+
+    #searchBox {
+        width: 40%;
+        max-width: 400px;
+        padding: 10px;
+        margin: 10px 0;
+        border: 2px solid #0277bd;
+        border-radius: 5px;
+        font-size: 16px;
     }
 
 }
