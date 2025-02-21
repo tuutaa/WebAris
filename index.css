@@ -15,11 +15,20 @@ body {
 
 /* ปรับเมนู */
 .menu {
+    display: flex; /* ใช้ Flexbox */
+    justify-content: space-between; /* จัดให้มีพื้นที่ระหว่างข้อความและปุ่ม */
+    align-items: center; /* จัดแนวให้ตรงกลางในแนวตั้ง */
     background: #0277bd;
     padding: 10px;
-    text-align: center;
     width: 100%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.menu-text {
+    color: white; /* สีข้อความ */
+    font-weight: bold; /* ทำให้ข้อความหนา */
+    margin-left: 20px;
+    font-size: 20px;
 }
 
 .menu button {
@@ -32,6 +41,7 @@ body {
     transition: background 0.3s ease;
     font-weight: bold;
     color: white;
+    margin-right: 30px;
 }
 
 .menu button:hover {
