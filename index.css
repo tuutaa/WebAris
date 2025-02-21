@@ -221,6 +221,7 @@ button.out-of-stock:active {
         right: 2.5%;
         top: 100px;
         font-size: 14px; /* ลดขนาดฟอนต์ */
+        max-height: 200px; /* เพิ่มความสูงสูงสุดเพื่อให้มีแทบเลื่อน */
     }
 
     #searchBox {
