@@ -13,6 +13,7 @@ body {
     flex-direction: column;
 }
 
+/* เมนูด้านบน */
 .menu {
     background: #0277bd; /* สีฟ้าเข้ม */
     padding: 10px;
@@ -115,6 +116,21 @@ body {
 
 .btn-quantity:active {
     background-color: #0288d1; /* สีฟ้าเข้มเมื่อกด */
+}
+
+button.out-of-stock {
+    background-color: #d32f2f !important; /* สีแดงเข้ม */
+    cursor: not-allowed; /* เปลี่ยนเมาส์เป็นแบบห้ามคลิก */
+    color: white;
+    border: none;
+}
+
+button.out-of-stock:hover {
+    background-color: #ff4848; /* สีฟ้าเมื่อ hover */
+}
+
+button.out-of-stock:active {
+    background-color: #ef3838; /* สีฟ้าเข้มขึ้นเมื่อกด */
 }
 
 table {

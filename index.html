@@ -450,74 +450,114 @@
     </div>
 
     <script>
-        let cart = [];
-        let stock = {
-            "Breadboard 400 hole": 3,
-            "Breadboard 830 hole": 14,
-            "Water test module": 11,
-            "4-digit display": 10,
-            "LED คละสี": 44,
-            "IR Reciever": 2,
-            "Humidity and Temperature": 1,
-            "Photoresistor Sensor Module": 1,
-            "IC 74HC595": 10,
-            "Servo SG90": 7,
-            "Steppermotor driver board": 10,
-            "Step motor 28BYJ48 5V": 3,
-            "Motor 5V": 4,
-            "L298N Dual H-Beidge Motor driver": 19,
-            "100 ohm / 5 W Resistors": 12,
-            "1 μF / 50 V Capacitors": 11,
-            "W04M Diode Bridge": 18,
-            "Relay Module": 9,
-            "Terminal Block": 8,
-            "Ball Switch": 7,
-            "Buzzer x2": 9,
-            "SUNON KD1206PHS2 (Fan)": 9,
-            "Node MCU base Ver1.0": 6,
-            "Arduino UNO board": 14,
-            "MOSFET": 32,
-            "47 μF / 25 V Capacitors": 1,
-            "100 μF / 25 V Capacitors": 4,
-            "Diode": 33,
-            "100 μF / 50 V Capacitors": 18,
-            "ESP8266 Board": 4,
-            "Sensor Sheild V 5.0": 11,
-            "ESP WROOM-32 WIFI": 2,
-            "4x4 Key board": 11,
-            "Clock module": 11,
-            "9V battery snap": 11,
-            "1-digit display": 6,
-            "MH-Sensor-Series Accelerometer ADXL337": 2,
-            "Servo arm SG90": 12,
-            "DC Plug 2.1 mm": 1,
-            "Remote control": 11,
-            "8x8 Dot Metrix": 10,
-            "Sound Module": 10,
-            "XY Joystick": 11,
-            "DC Motor": 15,
-            "Limit Switch": 7,
-            "IIC 1602 LCD": 8,
-            "USB 2.0 Type A to Type B": 19,
-            "USB 2.0 Type A to MicroUSB": 2,
-            "1K ohm": 37,
-            "10k ohm": 14,
-            "330 ohm": 32,
-            "100 ohm": 6,
-            "240 ohm": 1,
-            "470 ohm": 16,
-            "Resistors Pack": 3,
-            "Jumper เมีย-เมีย": 999,
-            "Potentionmeter": 8,
-            "2.54 mm Pin": 999,
-            "Jumper ผู้-เมีย": 999,
-            "Jumper ผู้-ผู้": 999,
-            "RGB 3 color module": 10,
-            "RFID Module": 11,
-            "RFID White card": 5,
-            "RFID Keychain": 10
-        };
-
+            let cart = [];
+            let stock = {};
+        
+            // อัปเดตสต็อกจาก Google Sheets
+            async function updateStock() {
+                try {
+                    const response = await fetch("https://script.google.com/macros/s/AKfycbzHY88clwoInXYZ6pyBAFG_t7iUfblQS0j6htpcj_vYtGzpGwzLzBN6S8JWEokOPYy0/exec?get=borrowedData");
+                    const borrowedData = await response.json();
+        
+                    document.querySelectorAll(".item").forEach(item => {
+                        let itemName = item.getAttribute("data-name");
+                        let stockElement = item.querySelector(".stock-quantity");
+                        let button = item.querySelector("button");
+        
+                        let initialStock = parseInt(stockElement.textContent) || 0;
+                        let borrowed = borrowedData[itemName] || 0;
+                        let availableStock = initialStock - borrowed;
+        
+                        // อัปเดตจำนวนสินค้าคงเหลือในตัวแปร stock
+                        stock[itemName] = availableStock;
+        
+                        // อัปเดต UI
+                        if (availableStock <= 0) {
+                            stockElement.textContent = "0";
+                            button.disabled = true;
+                            button.textContent = "สินค้าหมด";
+                            button.classList.add("out-of-stock");
+                        } else {
+                            stockElement.textContent = availableStock;
+                            button.disabled = false;
+                            button.textContent = "เพิ่มลงตะกร้า";
+                            button.classList.remove("out-of-stock");
+                        }
+                    });
+                } catch (error) {
+                    console.error("Error updating stock:", error);
+                }
+            }
+        
+            // ฟังก์ชันเพิ่มสินค้าไปที่ตะกร้า โดยอิงจาก stock ที่อัปเดตแล้ว
+            function addToCart(item, quantity) {
+                if (!(item in stock)) {
+                    alert("กำลังโหลดข้อมูลสต็อก กรุณาลองใหม่อีกครั้ง!");
+                    return;
+                }
+        
+                let availableStock = stock[item];
+                const existingItem = cart.find(c => c.item === item);
+        
+                if (availableStock <= 0) {
+                    alert("สินค้าหมด ไม่สามารถเพิ่มลงตะกร้าได้!");
+                    return;
+                }
+        
+                if (existingItem) {
+                    if (existingItem.quantity + quantity > availableStock) {
+                        alert(`ไม่สามารถเพิ่มสินค้าเกินจำนวนคงเหลือ (${availableStock} ชิ้น) ได้!`);
+                        return;
+                    }
+                    existingItem.quantity += quantity;
+                } else {
+                    if (quantity > availableStock) {
+                        alert(`ไม่สามารถเพิ่มสินค้าเกินจำนวนคงเหลือ (${availableStock} ชิ้น) ได้!`);
+                        return;
+                    }
+                    cart.push({ item, quantity });
+                }
+        
+                updateCartDisplay();
+            }
+        
+            // ฟังก์ชันอัปเดตตะกร้าโดยใช้ stock ที่อัปเดตล่าสุด
+            function updateCartDisplay() {
+                const cartDiv = document.getElementById('cart');
+                cartDiv.innerHTML = cart.map((c, index) => `
+                    ${c.item} x <span id="quantity-${index}">${c.quantity}</span>
+                    <button class="btn-quantity" onclick="changeQuantity(${index}, 1)" 
+                        ${c.quantity >= stock[c.item] ? "disabled" : ""}>+</button>
+                    <button class="btn-quantity" onclick="changeQuantity(${index}, -1)" 
+                        ${c.quantity === 1 ? "disabled" : ""}>-</button>
+                    <button class="btn-quantity" onclick="removeFromCart(${index})">ลบ</button>
+                    <br>
+                `).join('') || 'ไม่มีสินค้าในตะกร้า';
+            }
+        
+            // ฟังก์ชันเปลี่ยนจำนวนสินค้าในตะกร้า
+            function changeQuantity(index, delta) {
+                const item = cart[index].item;
+                const availableStock = stock[item];
+        
+                if (delta < 0 && cart[index].quantity === 1) {
+                    return;
+                }
+        
+                if (delta > 0 && cart[index].quantity >= availableStock) {
+                    alert(`ไม่สามารถเพิ่มเกินจำนวนคงเหลือ (${availableStock} ชิ้น) ได้!`);
+                    return;
+                }
+        
+                cart[index].quantity += delta;
+                updateCartDisplay();
+            }
+        
+            // โหลดสต็อกก่อนเริ่มต้นใช้งาน
+            window.onload = async function () {
+                await updateStock();
+            };
+        
         /*ฟังชันหาอุปกรณ์ในแทบค้นหา*/
         function filterItems() {
             const searchQuery = document.getElementById('searchBox').value.toLowerCase();
@@ -529,47 +569,6 @@
             });
         }
 
-
-        function addToCart(item, quantity) {
-            if (stock[item] === 0) {
-                alert("สินค้าหมด ไม่สามารถเพิ่มลงตะกร้าได้!");
-                return;
-            }
-        
-            const existingItem = cart.find(c => c.item === item);
-            const availableStock = stock[item];
-        
-            if (existingItem) {
-                if (existingItem.quantity + quantity > availableStock) {
-                    alert(`ไม่สามารถเพิ่มสินค้าเกินจำนวนคงเหลือ (${availableStock} ชิ้น) ได้!`);
-                    return;
-                }
-                existingItem.quantity += quantity;
-            } else {
-                if (quantity > availableStock) {
-                    alert(`ไม่สามารถเพิ่มสินค้าเกินจำนวนคงเหลือ (${availableStock} ชิ้น) ได้!`);
-                    return;
-                }
-                cart.push({ item, quantity });
-            }
-        
-            updateCartDisplay();
-        }
-
-
-        function updateCartDisplay() {
-            const cartDiv = document.getElementById('cart');
-            cartDiv.innerHTML = cart.map((c, index) => `
-                ${c.item} x <span id="quantity-${index}">${c.quantity}</span>
-                <button class="btn-quantity" onclick="changeQuantity(${index}, 1)" 
-                    ${c.quantity >= stock[c.item] ? "disabled" : ""}>+</button>
-                <button class="btn-quantity" onclick="changeQuantity(${index}, -1)" 
-                    ${c.quantity === 1 ? "disabled" : ""}>-</button>
-                <button class="btn-quantity" onclick="removeFromCart(${index})">ลบ</button>
-                <br>
-            `).join('') || 'ไม่มีสินค้าในตะกร้า';
-        }
-
         function showCheckout() {
             document.getElementById('checkout').style.display = 'block';
         }
@@ -579,28 +578,9 @@
             updateCartDisplay();
         }
 
-        function changeQuantity(index, delta) {
-            const item = cart[index].item;
-            const availableStock = stock[item];
-        
-            // ถ้ากดลด (-) แล้วจำนวนเหลือ 1 ไม่ให้ลดอีก
-            if (delta < 0 && cart[index].quantity === 1) {
-                return;
-            }
-        
-            // ถ้ากดเพิ่ม (+) แล้วเกินจำนวนคงเหลือ ไม่ให้เพิ่ม
-            if (delta > 0 && cart[index].quantity >= availableStock) {
-                alert(`ไม่สามารถเพิ่มเกินจำนวนคงเหลือ (${availableStock} ชิ้น) ได้!`);
-                return;
-            }
-        
-            cart[index].quantity += delta;
-            updateCartDisplay();
-        }
 
 
-
-        const API_URL = "https://script.google.com/macros/s/AKfycbxLagW1_4cbF6JDDogQq4NPeHpYguf0XjPdoX7RqY6mWm2zh8FVneBxKon59gwuou0i/exec"; // ใส่ URL API ที่ได้จาก Apps Script
+        const API_URL = "https://script.google.com/macros/s/AKfycbzHY88clwoInXYZ6pyBAFG_t7iUfblQS0j6htpcj_vYtGzpGwzLzBN6S8JWEokOPYy0/exec"; // ใส่ URL API ที่ได้จาก Apps Script
 
         // ส่งข้อมูลไปยัง Google Sheets
         function sendDataToSheets() {

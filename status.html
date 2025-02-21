@@ -7,72 +7,55 @@
     <link rel="ICON" href="png/83473756_2603462796609052_5197128114282430464_n.png">
     <title>Status</title>
 </head>
-
 <body>
     <div class="menu">
         <button onclick="window.location.href='index.html'">กลับหน้าหลัก</button>
     </div>
 
     <div class="container">
-        <h2>รายการที่ถูกยืม</h2>
-        <button onclick="showBorrowedList()">เช็คสถานะ</button>
-        <table id="borrowedList">
-            <tr>
-                <th>ชื่อ</th>
-                <th>รหัสนักศึกษา</th>
-                <th>เหตุผล</th>
-                <th>อุปกรณ์</th>
-                <th>สถานะ</th>
-                <th>การคืน</th>
-            </tr>
+        <h1>ข้อมูลของผู้ยืมอุปกรณ์</h1>
+        <button onclick="fetchData()">เช็คข้อมูล</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>ชื่อ</th>
+                    <th>รหัสนักศึกษา</th>
+                    <th>เหตุผล</th>
+                    <th>อุปกรณ์ที่ยืม</th>
+                    <th>วันที่-เวลา ในการยืม</th>
+                </tr>
+            </thead>
+            <tbody id="data-table">
+                <tr><td colspan="5">กดปุ่ม "เช็คข้อมูล" เพื่อโหลดข้อมูล</td></tr>
+            </tbody>
         </table>
     </div>
 
     <script>
-        function showBorrowedList() {
-            let borrowedList = JSON.parse(localStorage.getItem('borrowedEquipments')) || [];
-            let table = document.getElementById('borrowedList');
+        async function fetchData() {
+            const API_URL = "https://script.google.com/macros/s/AKfycbzHY88clwoInXYZ6pyBAFG_t7iUfblQS0j6htpcj_vYtGzpGwzLzBN6S8JWEokOPYy0/exec?get=allData";
             
-            // Clear existing table rows except header
-            table.innerHTML = '<tr><th>ชื่อ</th><th>รหัสนักศึกษา</th><th>เหตุผล</th><th>อุปกรณ์</th><th>สถานะ</th><th>การคืน</th></tr>';
-            
-            borrowedList.forEach((entry, index) => {
-                let row = table.insertRow();
-                row.innerHTML = `
-                    <td>${entry.name}</td>
-                    <td>${entry.studentId}</td>
-                    <td>${entry.reason}</td>
-                    <td>${entry.cart.map(c => `${c.item} x ${c.quantity}`).join(', ')}</td>
-                    <td>กำลังยืม</td>
-                    <td><button onclick="returnItem(${index})">คืน</button></td>
-                `;
-            });
-        }
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                const tableBody = document.getElementById("data-table");
+                tableBody.innerHTML = "";
 
-        function returnItem(index) {
-            let borrowedList = JSON.parse(localStorage.getItem('borrowedEquipments')) || [];
-            let entry = borrowedList[index];
-
-            // Update stock quantities
-            entry.cart.forEach(c => {
-                let stock = JSON.parse(localStorage.getItem('stock')) || {};
-                if (stock[c.item] !== undefined) {
-                    stock[c.item] += c.quantity; // เพิ่มจำนวนสินค้าคงเหลือ
-                }
-                localStorage.setItem('stock', JSON.stringify(stock)); // บันทึกข้อมูลลง localStorage
-            });
-
-            // Remove the item from the borrowed list
-            borrowedList.splice(index, 1);
-            
-            // Update the localStorage
-            localStorage.setItem('borrowedEquipments', JSON.stringify(borrowedList));
-            
-            // Show an alert to confirm
-            alert('คืนอุปกรณ์เรียบร้อย!');
-            
-            // Refresh the table after removal
-            showBorrowedList();
+                data.forEach(entry => {
+                    let cartItems = entry.cart.map(item => `${item.item} (${item.quantity})`).join(", ");
+                    let row = `<tr>
+                        <td>${entry.name}</td>
+                        <td>${entry.studentId}</td>
+                        <td>${entry.reason}</td>
+                        <td>${cartItems}</td>
+                        <td>${entry.date}</td>
+                    </tr>`;
+                    tableBody.innerHTML += row;
+                });
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                document.getElementById("data-table").innerHTML = `<tr><td colspan="5">เกิดข้อผิดพลาด</td></tr>`;
+            }
         }
     </script>
 </body>
