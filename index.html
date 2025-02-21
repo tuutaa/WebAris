@@ -442,9 +442,9 @@
         <button onclick="showCheckout()">ยืนยันการยืม</button>
         <div class="checkout-container" id="checkout" style="display:none;">
             <h2>ข้อมูลผู้ยืม</h2>
-            ชื่อ: <input type="text" id="name"><br>
-            รหัสนักศึกษา: <input type="text" id="studentId"><br>
-            เหตุผลในการยืม: <input type="text" id="reason"><br>
+            ชื่อ: <br><input type="text" id="name" class="input-field"><br>
+            รหัสนักศึกษา: <br><input type="text" id="studentId" class="input-field"><br>
+            เหตุผลในการยืม: <br><input type="text" id="reason" class="input-field"><br>
             <button onclick="sendDataToSheets()">บันทึกข้อมูล</button>
         </div>
     </div>
@@ -526,6 +526,7 @@
                 const cartDiv = document.getElementById('cart');
                 cartDiv.innerHTML = cart.map((c, index) => `
                     ${c.item} x <span id="quantity-${index}">${c.quantity}</span>
+                    <br>
                     <button class="btn-quantity" onclick="changeQuantity(${index}, 1)" 
                         ${c.quantity >= stock[c.item] ? "disabled" : ""}>+</button>
                     <button class="btn-quantity" onclick="changeQuantity(${index}, -1)" 

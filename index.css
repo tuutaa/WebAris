@@ -123,24 +123,38 @@ button.out-of-stock:active {
     position: fixed;
     right: 20px;
     top: 100px;
-    width: 390px;
+    width: 250px; 
     border: 1px solid #0277bd;
-    padding: 10px;
+    padding: 5px; 
     background: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    font-size: 14px; /* ลดขนาดฟอนต์ */
+    max-height: 400px; /* เพิ่มความสูงสูงสุดเพื่อให้มีแทบเลื่อน */
+    overflow-y: auto; /* แสดงแทบเลื่อนในแนวตั้ง */
+}
+
+.cart-container h2 {
+    font-size: 20px; /* ลดขนาดฟอนต์ */
+    text-align: center;
+    font-weight: bold;
+}
+
+.checkout-container{
+    font-weight: bold;
 }
 
 .btn-quantity {
     background-color: #ea3232;
     border: none;
-    padding: 7px;
-    margin: 1px;
+    width: 30px;
+    padding: 5px; /* ลด padding จาก 7px เป็น 5px */
+    margin: 0.5px;
     cursor: pointer;
     border-radius: 5px;
     color: white;
-    font-size: 16px;
+    font-size: 13px; /* ลดขนาดฟอนต์ */
     transition: background-color 0.3s ease;
 }
 
@@ -152,6 +166,14 @@ button.out-of-stock:active {
     background-color: #ea3232;
 }
 
+/*ช่องกรอกข้อมูลตอนยืนยัน*/
+.input-field {
+    width: 100%; 
+    margin-bottom: 10px; 
+    padding: 5px; 
+    box-sizing: border-box; /* ทำให้ padding และ border รวมอยู่ในความกว้าง */
+}
+
 /* ปรับขนาดสำหรับมือถือ */
 @media (max-width: 768px) {
     #shop {
@@ -159,9 +181,10 @@ button.out-of-stock:active {
     }
 
     .cart-container {
-        width: 80%;
+        width: 60%; /* ปรับขนาดให้เล็กลง */
         right: 10%;
         top: 80px;
+        font-size: 12px; /* ลดขนาดฟอนต์ */
     }
 
     .item {
@@ -184,9 +207,10 @@ button.out-of-stock:active {
     }
 
     .cart-container {
-        width: 95%;
+        width: 90%; /* ปรับขนาดให้เล็กลง */
         right: 2.5%;
         top: 100px;
+        font-size: 10px; /* ลดขนาดฟอนต์ */
     }
 
     .item {
