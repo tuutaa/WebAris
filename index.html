@@ -587,25 +587,25 @@
             const name = document.getElementById('name').value;
             const studentId = document.getElementById('studentId').value;
             const reason = document.getElementById('reason').value;
-
+        
             if (!name || !studentId || !reason || cart.length === 0) {
                 alert("กรุณากรอกข้อมูลให้ครบและเลือกอุปกรณ์");
                 return;
             }
-
+        
             // สร้าง iframe แบบซ่อน
             const iframeName = 'hidden_iframe_' + Date.now();
             const iframe = document.createElement('iframe');
             iframe.name = iframeName;
             iframe.style.display = 'none';
             document.body.appendChild(iframe);
-
+        
             // สร้างฟอร์ม
             const form = document.createElement('form');
             form.method = 'POST';
             form.action = API_URL;
             form.target = iframeName;
-
+        
             // เพิ่ม input fields
             function addField(name, value) {
                 const input = document.createElement('input');
@@ -614,21 +614,24 @@
                 input.value = value;
                 form.appendChild(input);
             }
-
+        
             addField('name', name);
             addField('studentId', studentId);
             addField('reason', reason);
             addField('cart', JSON.stringify(cart));
-
+        
             // เพิ่มฟอร์มลงในเอกสาร
             document.body.appendChild(form);
-
+        
             // เมื่อ iframe โหลดเสร็จ (ส่งข้อมูลสำเร็จ)
             iframe.onload = function() {
                 alert("บันทึกข้อมูลสำเร็จ!");
                 cart = [];
                 updateCartDisplay();
-
+        
+                // ซ่อนส่วนกรอกข้อมูล
+                document.getElementById('checkout').style.display = 'none';
+        
                 // เรียกใช้ฟังก์ชัน updateStock หลังจากบันทึกข้อมูลสำเร็จ
                 updateStock();
                 
@@ -636,7 +639,7 @@
                 document.body.removeChild(form);
                 document.body.removeChild(iframe);
             };
-
+        
             // ส่งฟอร์ม
             form.submit();
         }
