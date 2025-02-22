@@ -133,7 +133,7 @@ button.out-of-stock:active {
     position: fixed;
     right: 20px;
     top: 100px;
-    width: 250px; 
+    width: 280px; 
     border: 1px solid #0277bd;
     padding: 5px; 
     background: #ffffff;
@@ -183,6 +183,18 @@ button.out-of-stock:active {
     padding: 5px; 
     box-sizing: border-box; /* ทำให้ padding และ border รวมอยู่ในความกว้าง */
 }
+
+.small-input {
+    width: 30px; /* ปรับขนาดให้เล็กลง */
+    text-align: center; /* จัดให้ตัวเลขอยู่ตรงกลาง */
+}
+
+.small-input::-webkit-outer-spin-button,
+.small-input::-webkit-inner-spin-button {
+    -webkit-appearance: none; /* ซ่อนปุ่มเพิ่มลดใน Chrome และ Safari */
+    margin: 0;
+}
+
 
 /* ปรับขนาดสำหรับมือถือ */
 @media (max-width: 768px) {

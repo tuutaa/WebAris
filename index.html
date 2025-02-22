@@ -526,34 +526,32 @@
             function updateCartDisplay() {
                 const cartDiv = document.getElementById('cart');
                 cartDiv.innerHTML = cart.map((c, index) => `
-                    ${c.item} x <span id="quantity-${index}">${c.quantity}</span>
-                    <br>
-                    <button class="btn-quantity" onclick="changeQuantity(${index}, 1)" 
-                        ${c.quantity >= stock[c.item] ? "disabled" : ""}>+</button>
-                    <button class="btn-quantity" onclick="changeQuantity(${index}, -1)" 
-                        ${c.quantity === 1 ? "disabled" : ""}>-</button>
+                    ${c.item} 
+                    x <input type="number" id="quantity-${index}" class="small-input" value="${c.quantity}" min="1" max="${stock[c.item]}" 
+                        oninput="updateQuantity(${index}, this.value)"><br>
+                    <button class="btn-quantity" onclick="changeQuantity(${index}, 1)" ${c.quantity >= stock[c.item] ? "disabled" : ""}>+</button>
+                    <button class="btn-quantity" onclick="changeQuantity(${index}, -1)" ${c.quantity === 1 ? "disabled" : ""}>-</button>
                     <button class="btn-quantity" onclick="removeFromCart(${index})">ลบ</button>
                     <br>
                 `).join('') || 'ไม่มีสินค้าในตะกร้า';
             }
-        
-            // ฟังก์ชันเปลี่ยนจำนวนสินค้าในตะกร้า
-            function changeQuantity(index, delta) {
-                const item = cart[index].item;
-                const availableStock = stock[item];
-        
-                if (delta < 0 && cart[index].quantity === 1) {
-                    return;
-                }
-        
-                if (delta > 0 && cart[index].quantity >= availableStock) {
-                    alert(`ไม่สามารถเพิ่มเกินจำนวนคงเหลือ (${availableStock} ชิ้น) ได้!`);
-                    return;
-                }
-        
-                cart[index].quantity += delta;
+            
+            // อัปเดตค่าจำนวนจากช่องกรอกตัวเลข
+            function updateQuantity(index, newValue) {
+                let value = parseInt(newValue);
+                if (isNaN(value) || value < 1) value = 1;
+                if (value > stock[cart[index].item]) value = stock[cart[index].item];
+            
+                cart[index].quantity = value;
                 updateCartDisplay();
             }
+            
+            // ปรับค่าด้วยปุ่ม +/-
+            function changeQuantity(index, delta) {
+                let newQuantity = cart[index].quantity + delta;
+                updateQuantity(index, newQuantity);
+            }
+            
         
             // โหลดสต็อกก่อนเริ่มต้นใช้งาน
             window.onload = async function () {
