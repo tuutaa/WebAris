@@ -630,6 +630,9 @@
                 alert("บันทึกข้อมูลสำเร็จ!");
                 cart = [];
                 updateCartDisplay();
+
+                // เรียกใช้ฟังก์ชัน updateStock หลังจากบันทึกข้อมูลสำเร็จ
+                updateStock();
                 
                 // ลบฟอร์มและ iframe
                 document.body.removeChild(form);
