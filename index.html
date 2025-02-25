@@ -457,7 +457,7 @@
             // อัปเดตสต็อกจาก Google Sheets
             async function updateStock() {
                 try {
-                    const response = await fetch("https://script.google.com/macros/s/AKfycbzHY88clwoInXYZ6pyBAFG_t7iUfblQS0j6htpcj_vYtGzpGwzLzBN6S8JWEokOPYy0/exec?get=borrowedData");
+                    const response = await fetch("https://script.google.com/macros/s/AKfycbww8ItvKqAn3pqnaQXNcS5gnNmyBTPar6qn4Ze779dgVaDiHiXV9X0EJnVQ_QRWU-Vc/exec?get=borrowedData");
                     const borrowedData = await response.json();
         
                     document.querySelectorAll(".item").forEach(item => {
@@ -580,7 +580,7 @@
 
 
 
-        const API_URL = "https://script.google.com/macros/s/AKfycbzHY88clwoInXYZ6pyBAFG_t7iUfblQS0j6htpcj_vYtGzpGwzLzBN6S8JWEokOPYy0/exec"; // ใส่ URL API ที่ได้จาก Apps Script
+        const API_URL = "https://script.google.com/macros/s/AKfycbww8ItvKqAn3pqnaQXNcS5gnNmyBTPar6qn4Ze779dgVaDiHiXV9X0EJnVQ_QRWU-Vc/exec"; // ใส่ URL API ที่ได้จาก Apps Script
 
         // ส่งข้อมูลไปยัง Google Sheets
         function sendDataToSheets() {

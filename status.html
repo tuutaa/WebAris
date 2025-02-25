@@ -25,6 +25,7 @@
                         <th>เหตุผล</th>
                         <th>อุปกรณ์ที่ยืม</th>
                         <th>วันที่-เวลา ในการยืม</th>
+                        <th>สถานะ</th> <!-- เพิ่มคอลัมน์สถานะ -->
                     </tr>
                 </thead>
                 <tbody id="data-table">
@@ -36,7 +37,7 @@
 
     <script>
         async function fetchData() {
-            const API_URL = "https://script.google.com/macros/s/AKfycbzHY88clwoInXYZ6pyBAFG_t7iUfblQS0j6htpcj_vYtGzpGwzLzBN6S8JWEokOPYy0/exec?get=allData";
+            const API_URL = "https://script.google.com/macros/s/AKfycbww8ItvKqAn3pqnaQXNcS5gnNmyBTPar6qn4Ze779dgVaDiHiXV9X0EJnVQ_QRWU-Vc/exec?get=allData";
             
             try {
                 const response = await fetch(API_URL);
@@ -58,6 +59,7 @@
                         <td>${entry.reason}</td>
                         <td>${cartItems}</td>
                         <td>${entry.date}</td>
+                        <td>${entry.status}</td> <!-- เพิ่มข้อมูลสถานะ -->
                     </tr>`;
                     tableBody.innerHTML += row;
                 });
