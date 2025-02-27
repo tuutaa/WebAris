@@ -536,7 +536,7 @@
             // อัปเดตสต็อกจาก Google Sheets
             async function updateStock() {
                 try {
-                    const response = await fetch("https://script.google.com/macros/s/AKfycbww8ItvKqAn3pqnaQXNcS5gnNmyBTPar6qn4Ze779dgVaDiHiXV9X0EJnVQ_QRWU-Vc/exec?get=borrowedData");
+                    const response = await fetch("https://script.google.com/macros/s/AKfycbzEb3uEW1IYQ17eaAsVLgZMm6JJBuZZI4jfrBNqoXO9khKfgionI2g_in42eZJJLkSj/exec?get=borrowedData");
                     const borrowedData = await response.json();
         
                     document.querySelectorAll(".item").forEach(item => {
@@ -604,15 +604,27 @@
             // ฟังก์ชันอัปเดตตะกร้าโดยใช้ stock ที่อัปเดตล่าสุด
             function updateCartDisplay() {
                 const cartDiv = document.getElementById('cart');
-                cartDiv.innerHTML = cart.map((c, index) => `
-                    ${c.item} 
-                    x <input type="number" id="quantity-${index}" class="small-input" value="${c.quantity}" min="1" max="${stock[c.item]}" 
-                        oninput="updateQuantity(${index}, this.value)"><br>
-                    <button class="btn-quantity" onclick="changeQuantity(${index}, 1)" ${c.quantity >= stock[c.item] ? "disabled" : ""}>+</button>
-                    <button class="btn-quantity" onclick="changeQuantity(${index}, -1)" ${c.quantity === 1 ? "disabled" : ""}>-</button>
-                    <button class="btn-quantity" onclick="removeFromCart(${index})">ลบ</button>
-                    <br>
-                `).join('') || 'ไม่มีสินค้าในตะกร้า';
+                cartDiv.innerHTML = cart.map((c, index) => {
+                    // กำหนดรายการที่ต้องการให้มีช่องกรอกครุพรรณ
+                    const showDescriptionField = c.item === "ไขควงชุด" || c.item === "ประแจแอล" || c.item === "ปลั๊กพ่วง"
+                    || c.item === "DC POWER SUPPLY" || c.item === "OSCILOSCOPE" || c.item === "FUNCTION GENERATOR"
+                    || c.item === "DOFBOT" || c.item === "ROS CAR" || c.item === "ROBOTICS ARM"
+                    || c.item === "CAMERA" || c.item === "FPGA" || c.item === "Drone";
+                    
+                    return `
+                        ${c.item} 
+                        x <input type="number" id="quantity-${index}" class="small-input" value="${c.quantity}" min="1" max="${stock[c.item]}" 
+                            oninput="updateQuantity(${index}, this.value)"><br>
+                        ${showDescriptionField ? `
+                            <label for="item-${index}-description">ครุภัณฑ์:</label>
+                            <input type="text" id="item-${index}-description" placeholder="กรุณาใส่เลขครุภัณฑ์"><br>
+                        ` : ''}
+                        <button class="btn-quantity" onclick="changeQuantity(${index}, 1)" ${c.quantity >= stock[c.item] ? "disabled" : ""}>+</button>
+                        <button class="btn-quantity" onclick="changeQuantity(${index}, -1)" ${c.quantity === 1 ? "disabled" : ""}>-</button>
+                        <button class="btn-quantity" onclick="removeFromCart(${index})">ลบ</button>
+                        <br>
+                    `;
+                }).join('') || 'ไม่มีสินค้าในตะกร้า';
             }
             
             // อัปเดตค่าจำนวนจากช่องกรอกตัวเลข
@@ -659,9 +671,8 @@
 
 
 
-        const API_URL = "https://script.google.com/macros/s/AKfycbww8ItvKqAn3pqnaQXNcS5gnNmyBTPar6qn4Ze779dgVaDiHiXV9X0EJnVQ_QRWU-Vc/exec"; // ใส่ URL API ที่ได้จาก Apps Script
+        const API_URL = "https://script.google.com/macros/s/AKfycbzEb3uEW1IYQ17eaAsVLgZMm6JJBuZZI4jfrBNqoXO9khKfgionI2g_in42eZJJLkSj/exec"; // ใส่ URL API ที่ได้จาก Apps Script
 
-        // ส่งข้อมูลไปยัง Google Sheets
         function sendDataToSheets() {
             const name = document.getElementById('name').value;
             const studentId = document.getElementById('studentId').value;
@@ -671,6 +682,18 @@
                 alert("กรุณากรอกข้อมูลให้ครบและเลือกอุปกรณ์");
                 return;
             }
+        
+            // เพิ่มข้อมูลครุพรรณในตะกร้าเฉพาะรายการที่มีช่องกรอก
+            const cartWithDescriptions = cart.map((item, index) => {
+                const description = (item.item === "ไขควงชุด" || item.item === "ประแจแอล" || item.item === "ปลั๊กพ่วง"
+                || item.item === "DC POWER SUPPLY" || item.item === "OSCILOSCOPE" || item.item === "FUNCTION GENERATOR"
+                || item.item === "DOFBOT" || item.item === "ROS CAR" || item.item === "ROBOTICS ARM"
+                || item.item === "CAMERA" || item.item === "FPGA" || item.item === "Drone") 
+
+                    ? document.getElementById(`item-${index}-description`).value 
+                    : ""; // หรือ "" หากไม่ต้องการให้เป็น null
+                return { ...item, description };
+            });
         
             // สร้าง iframe แบบซ่อน
             const iframeName = 'hidden_iframe_' + Date.now();
@@ -697,7 +720,7 @@
             addField('name', name);
             addField('studentId', studentId);
             addField('reason', reason);
-            addField('cart', JSON.stringify(cart));
+            addField('cart', JSON.stringify(cartWithDescriptions));
         
             // เพิ่มฟอร์มลงในเอกสาร
             document.body.appendChild(form);

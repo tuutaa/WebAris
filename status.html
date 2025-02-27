@@ -38,7 +38,7 @@
 
     <script>
         async function fetchData() {
-            const API_URL = "https://script.google.com/macros/s/AKfycbww8ItvKqAn3pqnaQXNcS5gnNmyBTPar6qn4Ze779dgVaDiHiXV9X0EJnVQ_QRWU-Vc/exec?get=allData";
+            const API_URL = "https://script.google.com/macros/s/AKfycbzEb3uEW1IYQ17eaAsVLgZMm6JJBuZZI4jfrBNqoXO9khKfgionI2g_in42eZJJLkSj/exec?get=allData";
             
             try {
                 const response = await fetch(API_URL);
@@ -53,14 +53,19 @@
                 tableBody.innerHTML = "";
 
                 data.forEach(entry => {
-                    let cartItems = entry.cart.map(item => `${item.item} (${item.quantity})`).join("<br>");
+                    let cartItems = entry.cart.map(item => {
+                        let equipmentNumber = item.equipmentNumber ? ` (เลขครุพรรณ: ${item.equipmentNumber})` : '';
+                        let description = item.description ? `[${item.description}]` : ''; // ตรวจสอบ description
+                        return `${item.item}${equipmentNumber} ${description} (${item.quantity}) `;
+                    }).join("<br>");
+                    
                     let row = `<tr>
                         <td>${entry.name}</td>
                         <td>${entry.studentId}</td>
                         <td>${entry.reason}</td>
                         <td>${cartItems}</td>
                         <td>${entry.date}</td>
-                        <td>${entry.status}</td> <!-- เพิ่มข้อมูลสถานะ -->
+                        <td>${entry.status}</td>
                     </tr>`;
                     tableBody.innerHTML += row;
                 });

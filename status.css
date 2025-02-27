@@ -2,7 +2,7 @@
 
 /* ปรับ container ให้แสดงผลดีบนมือถือ */
 .container {
-    max-width: 750px;
+    max-width: 800px;
     margin: 20px auto;
     padding: 15px;
     background: #ffffff;
@@ -28,7 +28,7 @@ table {
     margin-top: 20px;
     overflow-x: auto;
     display: block;
-    min-width: 600px; /* ป้องกันตารางแคบเกินไป */
+    min-width: 650px; /* ป้องกันตารางแคบเกินไป */
     border-radius: 10px; /* เพิ่มมุมโค้ง */
     overflow: hidden; /* ซ่อนขอบที่เกิน */
 }
